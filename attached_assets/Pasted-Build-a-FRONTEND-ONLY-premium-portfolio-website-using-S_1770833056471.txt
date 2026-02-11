@@ -1,0 +1,147 @@
+Build a FRONTEND-ONLY premium portfolio website using STRICTLY React (JavaScript). No backend, no server, no database, no Firebase. Use placeholders for all text/images/logo except WhatsApp number.
+
+Goal:
+A premium “story-style” landing page for a Dubai-based service that creates personalized branding/portfolio websites for individuals. The vibe should match the attached reference design: modern dark UI, premium spacing, rounded cards, clean typography, and olive green accents.
+
+Core Requirements:
+1) Single Source of Truth (IMPORTANT)
+Create ONE config file/object (ex: config.js) that contains:
+- brandName (placeholder)
+- brandTagline (placeholder)
+- logoPath (placeholder)
+- whatsappNumber = "+971504486615" (must be used everywhere)
+- primaryThemeColor = olive green palette values
+- emailPlaceholder (optional)
+Changing these values should update the entire website automatically (navbar, footer, hero, form, etc.).
+
+2) Tech Stack
+- React (JS only)
+- Tailwind CSS (preferred) for premium UI
+- Framer Motion for animations
+- NO TypeScript
+- NO Next.js
+- NO backend
+
+3) Theme / Design Style
+- Dark premium background with olive green highlights
+- Subtle gradients + glassmorphism cards (soft blur)
+- Rounded corners (2xl style)
+- Soft shadow depth
+- Elegant spacing and minimal text (not verbose)
+- Smooth futuristic look but NOT robotic
+- Fully responsive (mobile/tablet/desktop)
+
+4) Layout Structure (Story Flow)
+Single page website with these sections:
+A) Navbar (sticky)
+   - Logo + brand name (from config)
+   - Links: Home, Story, Expertise, Work, Team, Testimonials, Contact
+   - Smooth scroll on click
+   - Animated hover underline effect
+   - Active section highlight while scrolling
+   - Navbar background blur + slight shrink effect on scroll
+
+B) Hero Section
+   - Premium headline (short)
+   - One-line subtext (short)
+   - Two CTA buttons: “Start Your Brand” + “View Work”
+   - Add animated text reveal + subtle floating gradient orb background
+   - Add a hero image placeholder with motion
+
+C) Story / Process Section
+   - Story-based layout: “From Idea → Identity → Digital Presence”
+   - 3-step journey cards with minimal copy
+   - Animate each step in with stagger scroll animation
+
+D) Expertise Section (ONLY THESE 3)
+   - AI Development
+   - Web Development
+   - Mobile App Development
+   Each with a short 1-liner (minimal text)
+   Add premium icons (lucide-react preferred) and hover glow effect.
+
+E) Work / Portfolio Section
+   - 4 to 6 project cards with placeholders
+   - Each card: title, category, short line, preview image placeholder
+   - Add filter tabs (All / Branding / Websites / Apps) using dummy categories
+   - Hover animation: lift + glow border (olive)
+
+F) Team Section (IMPORTANT)
+   - Add a “Meet Our Team” section similar to the reference image layout
+   - Use a grid of placeholder profile images
+   - Add one main title + short supporting line
+   - Add a premium CTA button like “Meet the Team”
+   - Animate images on scroll and hover
+
+G) Testimonials Section
+   - 2 to 3 short testimonial cards (placeholder)
+   - Add star rating placeholder
+   - Animate cards in smoothly
+
+H) Contact Section (Form + WhatsApp Integration)
+   - Form fields: Name, Email/Phone, Message
+   - On submit: open WhatsApp chat using wa.me link with prefilled message
+   - MUST use whatsappNumber from config.js
+   - Add validation (required fields)
+   - Add success animation or toast (frontend only)
+
+WhatsApp Prefilled Message Format:
+"Hello {brandName}, I want a personalized branding website.
+Name: {name}
+Contact: {contact}
+Message: {message}"
+
+I) Footer
+   - Brand name + tagline (from config)
+   - Social icons placeholders
+   - Quick links (scroll)
+   - Copyright
+
+5) Animations (Premium Requirements)
+- Use Framer Motion:
+   - Hero text reveal (fade + slide up)
+   - Stagger animation for section cards
+   - Smooth scroll-triggered animations
+   - Hover animations for cards and buttons
+- Add subtle parallax effect for background shapes
+- Keep animations smooth and elegant (no excessive bouncing)
+
+6) Navigation (MUST HAVE)
+- Single-page only (no routing library required)
+- Navbar links must smoothly scroll to sections
+- Implement smooth scroll using:
+   - CSS scroll-behavior: smooth
+   - AND/or react-scroll
+- Add active link highlight based on scroll position
+
+7) Extra Premium Features (Frontend Only)
+- Custom cursor glow effect (subtle olive glow) OPTIONAL but preferred
+- Scroll progress indicator bar at top
+- Section divider gradients
+- Reusable UI components (Button, Card, SectionHeader)
+- CTA buttons with animated gradient border
+- Add subtle background noise texture overlay for premium feel
+
+8) Folder Structure
+/src
+  /components
+  /sections
+  /assets (placeholders)
+  config.js
+  App.js
+
+9) Deliverables
+- Complete React project code
+- All placeholder content
+- Clean, readable components
+- README explaining:
+   - How to change brandName/logo/whatsappNumber in config.js
+   - How WhatsApp form works
+   - How to customize colors
+
+Important Rules:
+- STRICTLY frontend only.
+- STRICTLY React + JavaScript.
+- No backend, no APIs, no database.
+- Keep website text minimal and premium (not verbose).
+- Use placeholders for everything except WhatsApp number.
