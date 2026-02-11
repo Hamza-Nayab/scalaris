@@ -168,10 +168,15 @@
   }
 
   .glass {
-    background: linear-gradient(180deg, hsl(222 30% 11% / 0.72), hsl(222 30% 9% / 0.6));
-    border: 1px solid hsl(220 18% 20% / 0.7);
+    background: linear-gradient(180deg, hsl(var(--card) / 0.72), hsl(var(--card) / 0.6));
+    border: 1px solid hsl(var(--border) / 0.7);
     box-shadow: var(--shadow);
     backdrop-filter: blur(10px);
+  }
+
+  .dark .glass {
+    background: linear-gradient(180deg, hsl(222 30% 11% / 0.72), hsl(222 30% 9% / 0.6));
+    border: 1px solid hsl(220 18% 20% / 0.7);
   }
 
   .olive-glow {

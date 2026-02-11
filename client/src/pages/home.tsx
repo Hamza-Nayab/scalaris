@@ -115,7 +115,7 @@ function SectionHeader({
     >
       {eyebrow ? (
         <div
-          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-medium text-white/70"
+          className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-1 text-xs font-medium text-black/70 dark:text-white/70"
           data-testid={`${testId}-eyebrow`}
         >
           <Sparkles className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
@@ -125,7 +125,7 @@ function SectionHeader({
 
       <h2
         className={cn(
-          "mt-4 font-display text-3xl leading-tight tracking-tight sm:text-4xl",
+          "mt-4 font-display text-3xl leading-tight tracking-tight sm:text-4xl text-foreground",
         )}
         data-testid={`${testId}-title`}
       >
@@ -133,7 +133,7 @@ function SectionHeader({
       </h2>
       {desc ? (
         <p
-          className="mt-3 max-w-2xl text-sm leading-relaxed text-white/70 sm:text-base"
+          className="mt-3 max-w-2xl text-sm leading-relaxed text-black/70 dark:text-white/70 sm:text-base"
           data-testid={`${testId}-desc`}
         >
           {desc}
@@ -259,35 +259,35 @@ function Navbar({ activeId }: { activeId: string }) {
       <div className="mx-auto max-w-6xl px-4">
         <div
           className={cn(
-            "mt-4 rounded-3xl border border-white/10 dark:bg-black/30 bg-white/60 backdrop-blur-xl transition-all",
+            "mt-4 rounded-3xl border border-black/10 dark:border-white/10 dark:bg-black/30 bg-white/60 backdrop-blur-xl transition-all",
             scrolled ? "py-1.5 shadow-lg" : "py-2",
           )}
           data-testid="nav-bar"
         >
           <div className="flex items-center justify-between gap-3 px-4">
-            <button
-              type="button"
-              onClick={() => scrollToId("home")}
-              className="group flex items-center gap-2"
-              data-testid="link-home-logo"
-            >
-              <div className="h-8 w-8 overflow-hidden rounded-xl border border-white/10 bg-white/5">
-                <img
-                  src={siteConfig.logoPath}
-                  alt={siteConfig.brandName}
-                  className="h-full w-full object-cover"
-                  data-testid="img-logo"
-                />
-              </div>
-              <div className="leading-tight">
-                <div
-                  className="text-sm font-bold tracking-tight"
-                  data-testid="text-brandName"
-                >
-                  {siteConfig.brandName}
+              <button
+                type="button"
+                onClick={() => scrollToId("home")}
+                className="group flex items-center gap-2"
+                data-testid="link-home-logo"
+              >
+                <div className="h-8 w-8 overflow-hidden rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
+                  <img
+                    src={siteConfig.logoPath}
+                    alt={siteConfig.brandName}
+                    className="h-full w-full object-cover"
+                    data-testid="img-logo"
+                  />
                 </div>
-              </div>
-            </button>
+                <div className="leading-tight">
+                  <div
+                    className="text-sm font-bold tracking-tight text-foreground"
+                    data-testid="text-brandName"
+                  >
+                    {siteConfig.brandName}
+                  </div>
+                </div>
+              </button>
 
             <div className="hidden items-center gap-1 md:flex" data-testid="nav-links">
               {navLinks.map((l: (typeof navLinks)[number]) => {
@@ -394,7 +394,7 @@ function Hero() {
           >
             <motion.div variants={item}>
               <div
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70"
+                className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-1 text-xs text-black/70 dark:text-white/70"
                 data-testid="badge-hero"
               >
                 <Wand2 className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
@@ -404,7 +404,7 @@ function Hero() {
 
             <motion.h1
               variants={item}
-              className="mt-5 font-display text-4xl leading-[1.05] tracking-tight sm:text-5xl"
+              className="mt-5 font-display text-4xl leading-[1.05] tracking-tight sm:text-5xl text-foreground"
               data-testid="text-hero-title"
             >
               Your story, distilled into a premium online identity.
@@ -412,7 +412,7 @@ function Hero() {
 
             <motion.p
               variants={item}
-              className="mt-4 text-sm leading-relaxed text-white/70 sm:text-base"
+              className="mt-4 text-sm leading-relaxed text-black/70 dark:text-white/70 sm:text-base"
               data-testid="text-hero-sub"
             >
               Minimal. Elegant. Built to convert curiosity into clients.
@@ -436,20 +436,20 @@ function Hero() {
                 variant="ghost"
                 onClick={() => scrollToId("work")}
               >
-                View Work
+                <span className="text-foreground">View Work</span>
               </GradientButton>
             </motion.div>
 
             <motion.div
               variants={item}
-              className="mt-8 flex flex-wrap items-center gap-3 text-xs text-white/60"
+              className="mt-8 flex flex-wrap items-center gap-3 text-xs text-black/60 dark:text-white/60"
               data-testid="hero-meta"
             >
               {["Story-led", "Olive accents", "Glass UI", "Mobile-first"].map(
                 (t) => (
                   <span
                     key={t}
-                    className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1"
+                    className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-1"
                     data-testid={`pill-hero-${t}`}
                   >
                     <Check className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
@@ -596,26 +596,26 @@ function Story() {
               <GlassCard testId={`card-story-${i}`} className="h-full">
                 <div className="flex items-center justify-between">
                   <div
-                    className="text-xs font-medium text-white/60"
+                    className="text-xs font-medium text-black/60 dark:text-white/60"
                     data-testid={`text-story-step-${i}`}
                   >
                     Step {i + 1}
                   </div>
                   <div
-                    className="rounded-full border border-white/10 bg-white/5 px-2 py-1 text-xs text-white/70"
+                    className="rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-2 py-1 text-xs text-black/70 dark:text-white/70"
                     data-testid={`badge-story-${i}`}
                   >
                     {s.title}
                   </div>
                 </div>
                 <div
-                  className="mt-4 font-display text-2xl tracking-tight"
+                  className="mt-4 font-display text-2xl tracking-tight text-foreground"
                   data-testid={`text-story-title-${i}`}
                 >
                   {s.title}
                 </div>
                 <p
-                  className="mt-2 text-sm leading-relaxed text-white/70"
+                  className="mt-2 text-sm leading-relaxed text-black/70 dark:text-white/70"
                   data-testid={`text-story-line-${i}`}
                 >
                   {s.line}
@@ -675,7 +675,7 @@ function Expertise() {
               <GlassCard key={it.title} testId={`card-expertise-${idx}`}>
                 <div className="flex items-start gap-4">
                   <div
-                    className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/5"
+                    className="grid h-11 w-11 place-items-center rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5"
                     data-testid={`iconwrap-expertise-${idx}`}
                   >
                     <Icon
@@ -685,13 +685,13 @@ function Expertise() {
                   </div>
                   <div>
                     <div
-                      className="text-lg font-semibold tracking-tight"
+                      className="text-lg font-semibold tracking-tight text-foreground"
                       data-testid={`text-expertise-title-${idx}`}
                     >
                       {it.title}
                     </div>
                     <div
-                      className="mt-1 text-sm text-white/70"
+                      className="mt-1 text-sm text-black/70 dark:text-white/70"
                       data-testid={`text-expertise-desc-${idx}`}
                     >
                       {it.desc}
@@ -1191,7 +1191,7 @@ function Footer() {
           <div className="grid gap-8 md:grid-cols-3">
             <div>
               <div className="flex items-center gap-3" data-testid="footer-brand">
-                <div className="h-9 w-9 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+                <div className="h-9 w-9 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
                   <img
                     src={siteConfig.logoPath}
                     alt={siteConfig.brandName}
@@ -1200,22 +1200,22 @@ function Footer() {
                   />
                 </div>
                 <div>
-                  <div className="text-sm font-semibold" data-testid="text-footer-name">
+                  <div className="text-sm font-semibold text-foreground" data-testid="text-footer-name">
                     {siteConfig.brandName}
                   </div>
-                  <div className="text-xs text-white/60" data-testid="text-footer-tagline">
+                  <div className="text-xs text-black/60 dark:text-white/60" data-testid="text-footer-tagline">
                     {siteConfig.brandTagline}
                   </div>
                 </div>
               </div>
-              <p className="mt-4 text-sm text-white/70" data-testid="text-footer-desc">
+              <p className="mt-4 text-sm text-black/70 dark:text-white/70" data-testid="text-footer-desc">
                 Placeholder copy. Premium tone. Story-first layout.
               </p>
             </div>
 
             <div>
               <div
-                className="text-xs font-medium text-white/60"
+                className="text-xs font-medium text-black/60 dark:text-white/60"
                 data-testid="text-footer-links-title"
               >
                 Quick links
@@ -1226,7 +1226,7 @@ function Footer() {
                     key={l.id}
                     type="button"
                     onClick={() => scrollToId(l.id)}
-                    className="text-left text-sm text-white/75 hover:text-white"
+                    className="text-left text-sm text-black/75 dark:text-white/75 hover:text-primary dark:hover:text-white"
                     data-testid={`link-footer-${l.id}`}
                   >
                     {l.label}
