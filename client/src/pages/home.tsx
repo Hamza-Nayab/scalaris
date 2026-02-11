@@ -7,12 +7,37 @@ import {
   Github,
   Instagram,
   Linkedin,
+  Mail,
+  MapPin,
   MessageCircle,
+  Moon,
   Sparkles,
   Star,
+  Sun,
   Users,
   Wand2,
 } from "lucide-react";
+
+function useTheme() {
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      return document.documentElement.classList.contains("dark") ? "dark" : "light";
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === "dark") {
+      root.classList.add("dark");
+    } else {
+      root.classList.remove("dark");
+    }
+  }, [theme]);
+
+  const toggle = () => setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+  return { theme, toggle };
+}
 import { navLinks, siteConfig } from "@/config.ts";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -220,6 +245,7 @@ function CursorGlow() {
 
 function Navbar({ activeId }: { activeId: string }) {
   const [scrolled, setScrolled] = useState(false);
+  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -233,8 +259,7 @@ function Navbar({ activeId }: { activeId: string }) {
       <div className="mx-auto max-w-6xl px-4">
         <div
           className={cn(
-            "mt-4 rounded-3xl border border-white/10 bg-black/30 backdrop-blur-xl",
-            "transition-all",
+            "mt-4 rounded-3xl border border-white/10 dark:bg-black/30 bg-white/60 backdrop-blur-xl transition-all",
             scrolled ? "py-1.5 shadow-lg" : "py-2",
           )}
           data-testid="nav-bar"
@@ -243,10 +268,10 @@ function Navbar({ activeId }: { activeId: string }) {
             <button
               type="button"
               onClick={() => scrollToId("home")}
-              className="group flex items-center gap-3"
+              className="group flex items-center gap-2"
               data-testid="link-home-logo"
             >
-              <div className="h-9 w-9 overflow-hidden rounded-2xl border border-white/10 bg-white/5">
+              <div className="h-8 w-8 overflow-hidden rounded-xl border border-white/10 bg-white/5">
                 <img
                   src={siteConfig.logoPath}
                   alt={siteConfig.brandName}
@@ -256,13 +281,10 @@ function Navbar({ activeId }: { activeId: string }) {
               </div>
               <div className="leading-tight">
                 <div
-                  className="text-sm font-semibold tracking-tight"
+                  className="text-sm font-bold tracking-tight"
                   data-testid="text-brandName"
                 >
                   {siteConfig.brandName}
-                </div>
-                <div className="text-xs text-white/60" data-testid="text-brandTagline">
-                  {siteConfig.brandTagline}
                 </div>
               </div>
             </button>
@@ -276,33 +298,33 @@ function Navbar({ activeId }: { activeId: string }) {
                     type="button"
                     onClick={() => scrollToId(l.id)}
                     className={cn(
-                      "group relative rounded-2xl px-3 py-2 text-sm text-white/70 transition-colors",
-                      "hover:text-white",
-                      active ? "text-white" : "",
+                      "group relative rounded-2xl px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider transition-colors",
+                      "dark:text-white/60 text-black/60 hover:text-primary dark:hover:text-white",
+                      active ? "dark:text-white text-primary" : "",
                     )}
                     data-testid={`link-nav-${l.id}`}
                   >
                     <span>{l.label}</span>
                     <span
                       className={cn(
-                        "absolute bottom-1 left-3 right-3 h-px",
-                        "bg-[hsl(var(--primary))]",
-                        "origin-left scale-x-0 transition-transform",
+                        "absolute bottom-0 left-3 right-3 h-0.5",
+                        "bg-primary rounded-full origin-left scale-x-0 transition-transform",
                         active ? "scale-x-100" : "group-hover:scale-x-100",
                       )}
                     />
-                    {active ? (
-                      <span
-                        className="absolute inset-0 -z-10 rounded-2xl bg-white/5"
-                        aria-hidden
-                      />
-                    ) : null}
                   </button>
                 );
               })}
             </div>
 
             <div className="flex items-center gap-2" data-testid="nav-ctas">
+              <button
+                onClick={toggle}
+                className="p-2 rounded-xl dark:bg-white/5 bg-black/5 hover:bg-white/10 transition-colors"
+                data-testid="button-theme-toggle"
+              >
+                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+              </button>
               <a
                 href={buildWaLink(
                   `Hello ${siteConfig.brandName}, I want a personalized branding website.`,
@@ -310,45 +332,20 @@ function Navbar({ activeId }: { activeId: string }) {
                 target="_blank"
                 rel="noreferrer"
                 className={cn(
-                  "hidden items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80",
-                  "transition-colors hover:bg-white/8 md:inline-flex",
+                  "hidden items-center gap-2 rounded-xl border border-white/10 dark:bg-white/5 bg-black/5 px-3 py-2 text-[10px] font-black uppercase tracking-[0.15em]",
+                  "transition-all hover:bg-primary hover:text-white md:inline-flex",
                 )}
                 data-testid="button-whatsapp-nav"
               >
-                <MessageCircle className="h-4 w-4 text-[hsl(var(--primary))]" />
                 WhatsApp
               </a>
               <GradientButton
                 testId="button-start-nav"
                 onClick={() => scrollToId("contact")}
               >
-                Start
-                <ArrowRight className="ml-2 h-4 w-4" />
+                <span className="font-black uppercase tracking-[0.15em] text-[10px]">Let's Talk</span>
               </GradientButton>
             </div>
-          </div>
-
-          <div
-            className="mt-2 flex items-center gap-2 overflow-x-auto px-4 pb-3 md:hidden"
-            data-testid="nav-mobile"
-          >
-            {navLinks.map((l: (typeof navLinks)[number]) => {
-              const active = activeId === l.id;
-              return (
-                <button
-                  key={l.id}
-                  type="button"
-                  onClick={() => scrollToId(l.id)}
-                  className={cn(
-                    "shrink-0 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs",
-                    active ? "text-white" : "text-white/70",
-                  )}
-                  data-testid={`link-nav-mobile-${l.id}`}
-                >
-                  {l.label}
-                </button>
-              );
-            })}
           </div>
         </div>
       </div>
@@ -1030,10 +1027,7 @@ function Contact() {
       return;
     }
 
-    const msg = `Hello ${siteConfig.brandName}, I want a personalized branding website.
-Name: ${name}
-Contact: ${contact}
-Message: ${message}`;
+    const msg = `Hello ${siteConfig.brandName}, I want a personalized branding website.\nName: ${name}\nContact: ${contact}\nMessage: ${message}`;
     const url = buildWaLink(msg);
 
     toast.success("Opening WhatsApp…");
@@ -1052,18 +1046,40 @@ Message: ${message}`;
               testId="header-contact"
             />
 
-            <div className="glass rounded-3xl p-6" data-testid="card-contact-info">
-              <div className="flex items-center gap-3">
-                <div className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/5">
-                  <MessageCircle className="h-5 w-5 text-[hsl(var(--primary))]" />
+            <div className="glass rounded-3xl p-6 space-y-6" data-testid="card-contact-info">
+              <div className="flex items-center gap-4">
+                <div className="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 dark:bg-white/5 bg-black/5">
+                  <MessageCircle className="h-6 w-6 text-primary" />
                 </div>
                 <div>
-                  <div className="text-sm font-semibold" data-testid="text-contact-whatsTitle">
+                  <div className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40">
                     WhatsApp
                   </div>
-                  <div className="mt-1 text-sm text-white/70" data-testid="text-contact-number">
-                    {siteConfig.whatsappNumber}
+                  <div className="text-base font-bold">{siteConfig.whatsappNumber}</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 dark:bg-white/5 bg-black/5">
+                  <Mail className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40">
+                    Email
                   </div>
+                  <div className="text-base font-bold">{(siteConfig as any).emailPlaceholder}</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-4">
+                <div className="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 dark:bg-white/5 bg-black/5">
+                  <MapPin className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <div className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40">
+                    Office
+                  </div>
+                  <div className="text-base font-bold">{(siteConfig as any).officeAddress}</div>
                 </div>
               </div>
 
@@ -1073,11 +1089,11 @@ Message: ${message}`;
                 )}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-5 inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-white/80 hover:bg-white/8"
+                className="inline-flex w-full justify-center items-center gap-2 rounded-2xl bg-primary px-4 py-4 text-[11px] font-black uppercase tracking-[0.2em] text-white transition-transform hover:scale-[1.02] active:scale-100 shadow-lg shadow-primary/25"
                 data-testid="button-whatsapp-direct"
               >
-                Open chat
-                <ArrowRight className="h-4 w-4 text-[hsl(var(--primary))]" />
+                Instant Connect
+                <ArrowRight className="h-4 w-4" />
               </a>
             </div>
           </div>
@@ -1089,73 +1105,73 @@ Message: ${message}`;
           >
             <div className="grid gap-4">
               <div>
-                <label className="text-xs text-white/60" data-testid="label-name">
+                <label
+                  className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40"
+                  data-testid="label-name"
+                >
                   Name
                 </label>
                 <Input
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className={cn(
-                    "mt-2 h-11 rounded-2xl border-white/10 bg-white/5 text-white placeholder:text-white/35",
-                    errors.name
-                      ? "ring-1 ring-red-500/40"
-                      : "focus-visible:ring-[hsl(var(--primary))]/40",
+                    "mt-2 h-12 rounded-2xl border-white/10 dark:bg-white/5 bg-black/5 dark:text-white text-black placeholder:text-black/20 dark:placeholder:text-white/20",
+                    errors.name ? "ring-1 ring-red-500/40" : "focus-visible:ring-primary/40",
                   )}
-                  placeholder="Your name"
+                  placeholder="Your full name"
                   data-testid="input-name"
                 />
               </div>
 
               <div>
-                <label className="text-xs text-white/60" data-testid="label-contact">
+                <label
+                  className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40"
+                  data-testid="label-contact"
+                >
                   Email or phone
                 </label>
                 <Input
                   value={contact}
                   onChange={(e) => setContact(e.target.value)}
                   className={cn(
-                    "mt-2 h-11 rounded-2xl border-white/10 bg-white/5 text-white placeholder:text-white/35",
-                    errors.contact
-                      ? "ring-1 ring-red-500/40"
-                      : "focus-visible:ring-[hsl(var(--primary))]/40",
+                    "mt-2 h-12 rounded-2xl border-white/10 dark:bg-white/5 bg-black/5 dark:text-white text-black placeholder:text-black/20 dark:placeholder:text-white/20",
+                    errors.contact ? "ring-1 ring-red-500/40" : "focus-visible:ring-primary/40",
                   )}
-                  placeholder="you@email.com"
+                  placeholder="How can we reach you?"
                   data-testid="input-contact"
                 />
               </div>
 
               <div>
-                <label className="text-xs text-white/60" data-testid="label-message">
-                  Message
+                <label
+                  className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40"
+                  data-testid="label-message"
+                >
+                  Project Brief
                 </label>
                 <Textarea
                   value={message}
                   onChange={(e) => setMessage(e.target.value)}
                   className={cn(
-                    "mt-2 min-h-32 rounded-2xl border-white/10 bg-white/5 text-white placeholder:text-white/35",
-                    errors.message
-                      ? "ring-1 ring-red-500/40"
-                      : "focus-visible:ring-[hsl(var(--primary))]/40",
+                    "mt-2 min-h-32 rounded-2xl border-white/10 dark:bg-white/5 bg-black/5 dark:text-white text-black placeholder:text-black/20 dark:placeholder:text-white/20",
+                    errors.message ? "ring-1 ring-red-500/40" : "focus-visible:ring-primary/40",
                   )}
-                  placeholder="Tell us what you want to build"
+                  placeholder="Tell us about your vision..."
                   data-testid="input-message"
                 />
               </div>
 
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div className="text-xs text-white/60" data-testid="text-contact-note">
-                  On submit, we’ll open a pre-filled WhatsApp message.
-                </div>
-                <motion.div whileHover={{ y: -1 }} whileTap={{ y: 0 }}>
-                  <Button
-                    type="submit"
-                    className="gradient-border h-11 rounded-2xl bg-[hsl(var(--primary))] px-5 text-[hsl(var(--primary-foreground))]"
-                    data-testid="button-submit"
-                  >
-                    Send via WhatsApp
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </motion.div>
+              <div className="pt-2">
+                <Button
+                  type="submit"
+                  className="w-full h-12 rounded-2xl bg-primary text-white font-black uppercase tracking-[0.25em] text-[11px] transition-all hover:brightness-110 shadow-lg shadow-primary/20"
+                  data-testid="button-submit"
+                >
+                  Confirm & Launch
+                </Button>
+                <p className="mt-4 text-center text-[9px] font-bold uppercase tracking-widest dark:text-white/20 text-black/20">
+                  Opens Secure WhatsApp Chat
+                </p>
               </div>
             </div>
           </form>

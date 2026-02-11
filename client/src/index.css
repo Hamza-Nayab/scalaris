@@ -51,7 +51,51 @@
 
   --radius: 1rem;
 
-  /* Dark-first palette */
+  /* LIGHT MODE */
+  --background: 210 20% 98%;
+  --foreground: 222 33% 4%;
+
+  --card: 0 0% 100%;
+  --card-foreground: 222 33% 4%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 33% 4%;
+
+  --muted: 210 20% 90%;
+  --muted-foreground: 215 14% 40%;
+
+  --border: 210 20% 88%;
+  --card-border: 210 20% 92%;
+  --input: 210 20% 85%;
+
+  /* Electric Blue accent system */
+  --primary: 210 100% 50%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 210 20% 92%;
+  --secondary-foreground: 222 33% 4%;
+
+  --accent: 210 100% 96%;
+  --accent-foreground: 210 100% 40%;
+
+  --ring: 210 100% 50%;
+
+  --destructive: 0 72% 55%;
+  --destructive-foreground: 0 0% 100%;
+
+  /* Shadows tuned for light UI */
+  --shadow-2xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-xs: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-sm: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+  --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+}
+
+.dark {
+  /* DARK MODE */
   --background: 222 33% 4%;
   --foreground: 210 20% 96%;
 
@@ -80,9 +124,6 @@
 
   --ring: 210 100% 50%;
 
-  --destructive: 0 72% 55%;
-  --destructive-foreground: 0 0% 100%;
-
   /* Shadows tuned for dark UI */
   --shadow-2xs: 0 1px 0 0 hsl(0 0% 100% / 0.04);
   --shadow-xs: 0 1px 0 0 hsl(0 0% 100% / 0.04), 0 10px 30px -20px hsl(0 0% 0% / 0.65);
@@ -92,10 +133,6 @@
   --shadow-lg: 0 1px 0 0 hsl(0 0% 100% / 0.06), 0 30px 100px -46px hsl(0 0% 0% / 0.88);
   --shadow-xl: 0 1px 0 0 hsl(0 0% 100% / 0.06), 0 40px 130px -60px hsl(0 0% 0% / 0.9);
   --shadow-2xl: 0 1px 0 0 hsl(0 0% 100% / 0.06), 0 60px 180px -80px hsl(0 0% 0% / 0.92);
-}
-
-.dark {
-  /* keep dark as default */
 }
 
 @layer base {
