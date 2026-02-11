@@ -59,13 +59,24 @@ function useActiveSection(sectionIds: string[]) {
       (entries) => {
         const visible = entries
           .filter((e) => e.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));
-        if (visible[0]?.target?.id) setActive(visible[0].target.id);
+          .sort((a, b) => {
+            // Priority: element covering more of the viewport center
+            const rectA = a.target.getBoundingClientRect();
+            const rectB = b.target.getBoundingClientRect();
+            const center = window.innerHeight / 2;
+            const distA = Math.abs((rectA.top + rectA.bottom) / 2 - center);
+            const distB = Math.abs((rectB.top + rectB.bottom) / 2 - center);
+            return distA - distB;
+          });
+        
+        if (visible[0]?.target?.id) {
+          setActive(visible[0].target.id);
+        }
       },
       {
         root: null,
-        threshold: [0.15, 0.22, 0.3, 0.4],
-        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+        rootMargin: "-10% 0px -10% 0px",
       },
     );
 
@@ -79,7 +90,15 @@ function useActiveSection(sectionIds: string[]) {
 function scrollToId(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
-  el.scrollIntoView({ behavior: "smooth", block: "start" });
+  
+  const navHeight = 80; // Offset for fixed navbar
+  const elementPosition = el.getBoundingClientRect().top;
+  const offsetPosition = elementPosition + window.pageYOffset - navHeight;
+
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: "smooth"
+  });
 }
 
 function formatWaNumber(input: string) {
@@ -303,17 +322,24 @@ function Navbar({ activeId }: { activeId: string }) {
                     type="button"
                     onClick={() => scrollToId(l.id)}
                     className={cn(
-                      "group relative rounded-2xl px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider transition-colors",
+                      "group relative rounded-2xl px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider transition-all duration-200",
                       "text-black/60 dark:text-white/60 hover:text-primary dark:hover:text-white",
                       active ? "text-primary dark:text-white" : "",
                     )}
                     data-testid={`link-nav-${l.id}`}
                   >
-                    <span>{l.label}</span>
+                    <span className="relative z-10">{l.label}</span>
+                    {active && (
+                      <motion.span
+                        layoutId="nav-active-pill"
+                        className="absolute inset-0 z-0 rounded-xl bg-primary/5 dark:bg-white/5"
+                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                      />
+                    )}
                     <span
                       className={cn(
-                        "absolute bottom-0 left-3 right-3 h-0.5",
-                        "bg-primary rounded-full origin-left scale-x-0 transition-transform",
+                        "absolute bottom-0 left-3 right-3 h-0.5 z-10",
+                        "bg-primary rounded-full origin-left scale-x-0 transition-transform duration-200",
                         active ? "scale-x-100" : "group-hover:scale-x-100",
                       )}
                     />
