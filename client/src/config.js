@@ -21,11 +21,11 @@ export const siteConfig = {
 };
 
 export const navLinks = [
-  { id: "home", label: "Home" },
-  { id: "story", label: "Story" },
-  { id: "expertise", label: "Expertise" },
-  { id: "work", label: "Work" },
-  { id: "team", label: "Team" },
-  { id: "testimonials", label: "Testimonials" },
-  { id: "contact", label: "Contact" },
+  { id: "home", label: "Intro" },
+  { id: "story", label: "The Vision" },
+  { id: "expertise", label: "Capabilities" },
+  { id: "work", label: "Creations" },
+  { id: "team", label: "Architects" },
+  { id: "testimonials", label: "Trust" },
+  { id: "contact", label: "Collaborate" },
 ];

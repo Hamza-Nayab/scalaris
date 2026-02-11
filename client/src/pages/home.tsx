@@ -235,7 +235,7 @@ function Navbar({ activeId }: { activeId: string }) {
           className={cn(
             "mt-4 rounded-3xl border border-white/10 bg-black/30 backdrop-blur-xl",
             "transition-all",
-            scrolled ? "py-2 shadow-lg" : "py-3",
+            scrolled ? "py-1.5 shadow-lg" : "py-2",
           )}
           data-testid="nav-bar"
         >
@@ -1258,7 +1258,7 @@ export default function Home() {
   const active = useActiveSection(ids);
 
   return (
-    <div className="relative min-h-screen bg-[radial-gradient(900px_500px_at_10%_0%,hsl(var(--primary)/0.16),transparent_55%),radial-gradient(800px_520px_at_90%_20%,hsl(160_84%_35%/0.10),transparent_60%),radial-gradient(900px_700px_at_50%_100%,hsl(222_30%_12%/1),hsl(var(--background)))]">
+    <div className="relative min-h-screen bg-[radial-gradient(900px_500px_at_10%_0%,hsl(var(--primary)/0.12),transparent_55%),radial-gradient(800px_520px_at_90%_20%,hsl(210_100%_50%/0.08),transparent_60%),radial-gradient(900px_700px_at_50%_100%,hsl(222_30%_8%/1),hsl(var(--background)))]">
       <TopProgress />
       <CursorGlow />
       <Navbar activeId={active} />

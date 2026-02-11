@@ -52,33 +52,33 @@
   --radius: 1rem;
 
   /* Dark-first palette */
-  --background: 222 33% 6%;
+  --background: 222 33% 4%;
   --foreground: 210 20% 96%;
 
-  --card: 222 30% 9%;
+  --card: 222 30% 7%;
   --card-foreground: 210 20% 96%;
 
-  --popover: 222 30% 9%;
+  --popover: 222 30% 7%;
   --popover-foreground: 210 20% 96%;
 
-  --muted: 223 22% 14%;
+  --muted: 223 22% 10%;
   --muted-foreground: 215 14% 72%;
 
-  --border: 220 18% 18%;
-  --card-border: 220 18% 16%;
-  --input: 220 18% 22%;
+  --border: 220 18% 14%;
+  --card-border: 220 18% 12%;
+  --input: 220 18% 18%;
 
-  /* Olive accent system */
-  --primary: 78 35% 45%;
-  --primary-foreground: 222 33% 6%;
+  /* Electric Blue accent system */
+  --primary: 210 100% 50%;
+  --primary-foreground: 210 20% 96%;
 
-  --secondary: 223 22% 14%;
+  --secondary: 223 22% 12%;
   --secondary-foreground: 210 20% 96%;
 
-  --accent: 84 32% 22%;
+  --accent: 210 100% 15%;
   --accent-foreground: 210 20% 96%;
 
-  --ring: 78 35% 45%;
+  --ring: 210 100% 50%;
 
   --destructive: 0 72% 55%;
   --destructive-foreground: 0 0% 100%;
