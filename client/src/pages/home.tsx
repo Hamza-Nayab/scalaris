@@ -1237,7 +1237,7 @@ function Footer() {
 
             <div>
               <div
-                className="text-xs font-medium text-white/60"
+                className="text-xs font-medium text-black/60 dark:text-white/60"
                 data-testid="text-footer-social-title"
               >
                 Social
@@ -1251,14 +1251,14 @@ function Footer() {
                   <a
                     key={id}
                     href="#"
-                    className="grid h-10 w-10 place-items-center rounded-2xl border border-white/10 bg-white/5 text-white/70 hover:bg-white/8"
+                    className="grid h-10 w-10 place-items-center rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70 hover:bg-black/10 dark:hover:bg-white/8"
                     data-testid={`link-social-${id}`}
                   >
                     <Icon className="h-4 w-4" />
                   </a>
                 ))}
               </div>
-              <div className="mt-5 text-xs text-white/60" data-testid="text-footer-copy">
+              <div className="mt-5 text-xs text-black/60 dark:text-white/60" data-testid="text-footer-copy">
                 © {new Date().getFullYear()} {siteConfig.brandName}. All rights reserved.
               </div>
             </div>
@@ -1274,7 +1274,7 @@ export default function Home() {
   const active = useActiveSection(ids);
 
   return (
-    <div className="relative min-h-screen bg-[radial-gradient(900px_500px_at_10%_0%,hsl(var(--primary)/0.12),transparent_55%),radial-gradient(800px_520px_at_90%_20%,hsl(210_100%_50%/0.08),transparent_60%),radial-gradient(900px_700px_at_50%_100%,hsl(222_30%_8%/1),hsl(var(--background)))]">
+    <div className="relative min-h-screen bg-background">
       <TopProgress />
       <CursorGlow />
       <Navbar activeId={active} />
