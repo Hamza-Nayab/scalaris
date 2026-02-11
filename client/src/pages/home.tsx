@@ -299,8 +299,8 @@ function Navbar({ activeId }: { activeId: string }) {
                     onClick={() => scrollToId(l.id)}
                     className={cn(
                       "group relative rounded-2xl px-3 py-1.5 text-[11px] font-bold uppercase tracking-wider transition-colors",
-                      "dark:text-white/60 text-black/60 hover:text-primary dark:hover:text-white",
-                      active ? "dark:text-white text-primary" : "",
+                      "text-black/60 dark:text-white/60 hover:text-primary dark:hover:text-white",
+                      active ? "text-primary dark:text-white" : "",
                     )}
                     data-testid={`link-nav-${l.id}`}
                   >
@@ -520,17 +520,17 @@ function Hero() {
                 ].map((s) => (
                   <div
                     key={s.k}
-                    className="rounded-2xl border border-white/10 bg-white/5 p-3"
+                    className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3"
                     data-testid={`stat-${s.k}`}
                   >
                     <div
-                      className="text-xs text-white/60"
+                      className="text-xs text-black/60 dark:text-white/60"
                       data-testid={`stat-key-${s.k}`}
                     >
                       {s.k}
                     </div>
                     <div
-                      className="mt-1 text-sm font-semibold"
+                      className="mt-1 text-sm font-semibold text-foreground"
                       data-testid={`stat-val-${s.k}`}
                     >
                       {s.v}
@@ -778,7 +778,7 @@ function Work() {
         />
 
         <div className="flex flex-wrap items-center gap-2" data-testid="tabs-work">
-          <div className="mr-1 inline-flex items-center gap-2 text-xs text-white/60">
+          <div className="mr-1 inline-flex items-center gap-2 text-xs text-black/60 dark:text-white/60">
             <Filter className="h-3.5 w-3.5" />
             Filter
           </div>
@@ -788,10 +788,10 @@ function Work() {
               type="button"
               onClick={() => setTab(t)}
               className={cn(
-                "rounded-full border border-white/10 px-4 py-2 text-xs transition-colors",
+                "rounded-full border border-black/10 dark:border-white/10 px-4 py-2 text-xs transition-colors",
                 tab === t
-                  ? "bg-[hsl(var(--primary))]/15 text-white"
-                  : "bg-white/5 text-white/70 hover:bg-white/8",
+                  ? "bg-[hsl(var(--primary))]/15 text-primary dark:text-white"
+                  : "bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70 hover:bg-black/10 dark:hover:bg-white/8",
               )}
               data-testid={`tab-work-${t}`}
             >
@@ -811,37 +811,37 @@ function Work() {
           {filtered.map((p) => (
             <GlassCard key={p.id} testId={`card-project-${p.id}`}>
               <div
-                className="aspect-[4/3] overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-black/40"
+                className="aspect-[4/3] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-black/5 dark:from-white/5 to-black/20 dark:to-black/40"
                 data-testid={`img-project-${p.id}`}
               >
-                <div className="flex h-full items-center justify-center text-xs text-white/60">
+                <div className="flex h-full items-center justify-center text-xs text-black/60 dark:text-white/60">
                   Preview image placeholder
                 </div>
               </div>
               <div className="mt-4 flex items-center justify-between">
                 <div>
                   <div
-                    className="text-sm font-semibold"
+                    className="text-sm font-semibold text-foreground"
                     data-testid={`text-project-title-${p.id}`}
                   >
                     {p.title}
                   </div>
                   <div
-                    className="mt-1 text-xs text-white/60"
+                    className="mt-1 text-xs text-black/60 dark:text-white/60"
                     data-testid={`text-project-cat-${p.id}`}
                   >
                     {p.category}
                   </div>
                 </div>
                 <div
-                  className="rounded-full border border-white/10 bg-white/5 p-2"
+                  className="rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-2"
                   data-testid={`button-project-open-${p.id}`}
                 >
                   <ArrowRight className="h-4 w-4 text-[hsl(var(--primary))]" />
                 </div>
               </div>
               <div
-                className="mt-3 text-sm text-white/70"
+                className="mt-3 text-sm text-black/70 dark:text-white/70"
                 data-testid={`text-project-line-${p.id}`}
               >
                 {p.line}
@@ -907,22 +907,22 @@ function Team() {
             >
               <div className="glass gradient-border relative overflow-hidden rounded-3xl p-3 transition-all group-hover:olive-glow">
                 <div
-                  className="aspect-[3/4] overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/5 to-black/50"
+                  className="aspect-[3/4] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-black/5 dark:from-white/5 to-black/20 dark:to-black/50"
                   data-testid={`img-team-${p.id}`}
                 >
-                  <div className="flex h-full items-center justify-center text-xs text-white/60">
+                  <div className="flex h-full items-center justify-center text-xs text-black/60 dark:text-white/60">
                     Profile image
                   </div>
                 </div>
                 <div className="mt-3 px-1">
                   <div
-                    className="text-sm font-semibold"
+                    className="text-sm font-semibold text-foreground"
                     data-testid={`text-team-name-${p.id}`}
                   >
                     {p.name}
                   </div>
                   <div
-                    className="mt-0.5 text-xs text-white/60"
+                    className="mt-0.5 text-xs text-black/60 dark:text-white/60"
                     data-testid={`text-team-role-${p.id}`}
                   >
                     {p.role}
@@ -986,13 +986,13 @@ function Testimonials() {
                   ))}
                 </div>
                 <div
-                  className="mt-4 text-sm text-white/80"
+                  className="mt-4 text-sm text-black/80 dark:text-white/80"
                   data-testid={`text-testimonial-line-${t.id}`}
                 >
                   “{t.line}”
                 </div>
                 <div
-                  className="mt-4 text-xs text-white/60"
+                  className="mt-4 text-xs text-black/60 dark:text-white/60"
                   data-testid={`text-testimonial-name-${t.id}`}
                 >
                   {t.name}
