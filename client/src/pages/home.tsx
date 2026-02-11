@@ -147,11 +147,13 @@ function GradientButton({
   children,
   onClick,
   variant = "primary",
+  className,
   testId,
 }: {
   children: React.ReactNode;
   onClick?: () => void;
-  variant?: "primary" | "ghost";
+  variant?: "primary" | "ghost" | "outline";
+  className?: string;
   testId: string;
 }) {
   return (
@@ -163,7 +165,10 @@ function GradientButton({
           "gradient-border h-11 rounded-2xl px-5 text-sm shadow-sm transition-all",
           variant === "primary"
             ? "bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:brightness-[1.03]"
-            : "bg-white/5 text-white hover:bg-white/8",
+            : variant === "ghost"
+            ? "bg-white/5 text-white hover:bg-white/8"
+            : "bg-transparent border border-current",
+          className,
         )}
         data-testid={testId}
       >
@@ -475,12 +480,11 @@ function Hero() {
             >
               <div className="absolute inset-0 noise" aria-hidden />
               <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-white/5 to-black/40">
-                <div
-                  className="absolute inset-0 flex items-center justify-center text-xs text-white/60"
-                  data-testid="img-hero-placeholder"
-                >
-                  Hero image placeholder
-                </div>
+                <img
+                  src="/src/assets/hero-bg.jpg"
+                  alt="Premium Branding"
+                  className="absolute inset-0 h-full w-full object-cover opacity-60 mix-blend-overlay"
+                />
                 <motion.div
                   className="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-[hsl(var(--primary))]/20 orb"
                   animate={
@@ -881,8 +885,9 @@ function Team() {
           <div className="flex justify-start lg:justify-end" data-testid="team-cta">
             <GradientButton
               testId="button-meet-team"
-              variant="ghost"
+              variant="outline"
               onClick={() => toast("Team profiles coming soon.")}
+              className="border-black/20 dark:border-white/20 text-black/80 dark:text-white/80"
             >
               Meet the Team
               <Users className="ml-2 h-4 w-4" />
