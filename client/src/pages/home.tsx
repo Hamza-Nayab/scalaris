@@ -21,7 +21,13 @@ import {
 function useTheme() {
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
-      return document.documentElement.classList.contains("dark") ? "dark" : "light";
+      const saved = localStorage.getItem("theme");
+      if (saved === "dark" || saved === "light") {
+        return saved;
+      }
+      return document.documentElement.classList.contains("dark")
+        ? "dark"
+        : "light";
     }
     return "dark";
   });
@@ -33,10 +39,11 @@ function useTheme() {
     } else {
       root.classList.remove("dark");
     }
+    localStorage.setItem("theme", theme);
   }, [theme]);
 
   const toggle = () => setTheme((prev) => (prev === "dark" ? "light" : "dark"));
-  return { theme, toggle };
+  return { theme, toggle, isDark: theme === "dark" };
 }
 import { navLinks, siteConfig } from "@/config.ts";
 import { cn } from "@/lib/utils";
@@ -68,7 +75,7 @@ function useActiveSection(sectionIds: string[]) {
             const distB = Math.abs((rectB.top + rectB.bottom) / 2 - center);
             return distA - distB;
           });
-        
+
         if (visible[0]?.target?.id) {
           setActive(visible[0].target.id);
         }
@@ -90,14 +97,14 @@ function useActiveSection(sectionIds: string[]) {
 function scrollToId(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
-  
+
   const navHeight = 80; // Offset for fixed navbar
   const elementPosition = el.getBoundingClientRect().top;
   const offsetPosition = elementPosition + window.pageYOffset - navHeight;
 
   window.scrollTo({
     top: offsetPosition,
-    behavior: "smooth"
+    behavior: "smooth",
   });
 }
 
@@ -126,10 +133,7 @@ function SectionHeader({
 }) {
   return (
     <div
-      className={cn(
-        "mb-10",
-        align === "center" ? "text-center" : "text-left",
-      )}
+      className={cn("mb-10", align === "center" ? "text-center" : "text-left")}
       data-testid={testId}
     >
       {eyebrow ? (
@@ -185,8 +189,8 @@ function GradientButton({
           variant === "primary"
             ? "bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))] hover:brightness-[1.03]"
             : variant === "ghost"
-            ? "bg-white/5 text-white hover:bg-white/8"
-            : "bg-transparent border border-current",
+              ? "bg-white/5 text-white hover:bg-white/8"
+              : "bg-transparent border border-current",
           className,
         )}
         data-testid={testId}
@@ -289,31 +293,30 @@ function Navbar({ activeId }: { activeId: string }) {
           data-testid="nav-bar"
         >
           <div className="flex items-center justify-between gap-3 px-4">
-              <button
-                type="button"
-                onClick={() => scrollToId("home")}
-                className="group flex items-center gap-2"
-                data-testid="link-home-logo"
-              >
-                <div className="h-8 w-8 overflow-hidden rounded-xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
-                  <img
-                    src={siteConfig.logoPath}
-                    alt={siteConfig.brandName}
-                    className="h-full w-full object-cover"
-                    data-testid="img-logo"
-                  />
-                </div>
-                <div className="leading-tight">
-                  <div
-                    className="text-sm font-bold tracking-tight text-foreground"
-                    data-testid="text-brandName"
-                  >
-                    {siteConfig.brandName}
-                  </div>
-                </div>
-              </button>
+            <button
+              type="button"
+              onClick={() => scrollToId("home")}
+              className="group"
+              data-testid="link-home-logo"
+            >
+              <div className="h-14 w-14 overflow-hidden">
+                <img
+                  src={
+                    theme === "dark"
+                      ? siteConfig.darkLogoPath
+                      : siteConfig.logoPath
+                  }
+                  alt={siteConfig.brandName}
+                  className="h-full w-full object-cover"
+                  data-testid="img-logo"
+                />
+              </div>
+            </button>
 
-            <div className="hidden items-center gap-1 md:flex" data-testid="nav-links">
+            <div
+              className="hidden items-center gap-1 md:flex"
+              data-testid="nav-links"
+            >
               {navLinks.map((l: (typeof navLinks)[number]) => {
                 const active = activeId === l.id;
                 return (
@@ -333,7 +336,11 @@ function Navbar({ activeId }: { activeId: string }) {
                       <motion.span
                         layoutId="nav-active-pill"
                         className="absolute inset-0 z-0 rounded-xl bg-primary/5 dark:bg-white/5"
-                        transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                        transition={{
+                          type: "spring",
+                          stiffness: 380,
+                          damping: 30,
+                        }}
                       />
                     )}
                     <span
@@ -354,7 +361,11 @@ function Navbar({ activeId }: { activeId: string }) {
                 className="p-2 rounded-xl dark:bg-white/5 bg-black/5 hover:bg-white/10 transition-colors"
                 data-testid="button-theme-toggle"
               >
-                {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+                {theme === "dark" ? (
+                  <Sun className="h-4 w-4" />
+                ) : (
+                  <Moon className="h-4 w-4" />
+                )}
               </button>
               <a
                 href={buildWaLink(
@@ -374,7 +385,9 @@ function Navbar({ activeId }: { activeId: string }) {
                 testId="button-start-nav"
                 onClick={() => scrollToId("contact")}
               >
-                <span className="font-black uppercase tracking-[0.15em] text-[10px]">Let's Talk</span>
+                <span className="font-black uppercase tracking-[0.15em] text-[10px]">
+                  Let's Talk
+                </span>
               </GradientButton>
             </div>
           </div>
@@ -413,7 +426,10 @@ function Hero() {
       </div>
 
       <div className="relative mx-auto max-w-6xl px-4">
-        <div className="absolute inset-0 -z-10 rounded-[36px] noise" aria-hidden />
+        <div
+          className="absolute inset-0 -z-10 rounded-[36px] noise"
+          aria-hidden
+        />
 
         <div className="grid items-center gap-10 lg:grid-cols-2">
           <motion.div
@@ -476,18 +492,21 @@ function Hero() {
               className="mt-8 flex flex-wrap items-center gap-3 text-xs text-black/60 dark:text-white/60"
               data-testid="hero-meta"
             >
-              {["Story-led", "Olive accents", "Glass UI", "Mobile-first"].map(
-                (t) => (
-                  <span
-                    key={t}
-                    className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-1"
-                    data-testid={`pill-hero-${t}`}
-                  >
-                    <Check className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
-                    {t}
-                  </span>
-                ),
-              )}
+              {[
+                "Story-led Design",
+                "Premium UI",
+                "Considerate",
+                "Responsive",
+              ].map((t) => (
+                <span
+                  key={t}
+                  className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-1"
+                  data-testid={`pill-hero-${t}`}
+                >
+                  <Check className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
+                  {t}
+                </span>
+              ))}
             </motion.div>
           </motion.div>
 
@@ -744,6 +763,10 @@ type Project = {
   title: string;
   category: "Branding" | "Websites" | "Apps";
   line: string;
+  url?: string;
+  image?: string;
+  imageClassName?: string;
+  render?: React.ReactNode;
 };
 
 function Work() {
@@ -751,39 +774,69 @@ function Work() {
     () => [
       {
         id: "p1",
-        title: "Noor Portfolio",
+        title: "Sport Pro Tech",
         category: "Websites",
-        line: "Minimal, cinematic landing.",
+        line: "Dynamic sports platform with seamless UX.",
+        url: "https://sportprotech.com/#",
+        image: "https://sportprotech.com/assets/logo-sportprotech-TbApeHD3.png",
+        imageClassName: "h-full w-full object-contain p-4 bg-black",
       },
       {
         id: "p2",
-        title: "Desert Studio",
-        category: "Branding",
-        line: "Identity system + story page.",
+        title: "Dubai Medical Research Forum",
+        category: "Websites",
+        line: "Registration platform for DHA-backed medical research forum.",
+        url: "https://dmrf.ae/",
+        image: "/src/assets/dmrf.jpg",
+        imageClassName: "h-full w-full object-contain p-4 bg-black",
       },
       {
         id: "p3",
-        title: "Pulse App",
-        category: "Apps",
-        line: "Mobile UI with premium motion.",
+        title: "Operative Zainab",
+        category: "Websites",
+        line: "Portfolio with a custom terminal theme + integrated game.",
+        render: (
+          <div className="flex h-full w-full items-center justify-center rounded-2xl bg-black">
+            <div className="w-full px-5 py-6 text-left">
+              <div className="font-mono text-xl sm:text-2xl tracking-[0.18em] text-emerald-400 drop-shadow-[0_0_10px_rgba(16,185,129,0.45)]">
+                OPERATIVE ZAINAB
+              </div>
+              <div className="mt-2 font-mono text-[10px] sm:text-xs tracking-[0.2em] text-emerald-300/80">
+                SYSTEM ID: 2x4-PORTFOLIO-DEV
+              </div>
+              <div className="mt-4 h-1 w-full rounded-full bg-emerald-400/80 shadow-[0_0_12px_rgba(16,185,129,0.6)]" />
+            </div>
+          </div>
+        ),
       },
       {
         id: "p4",
-        title: "Luma Consulting",
+        title: "UniCadia",
         category: "Websites",
-        line: "Conversion-first services.",
+        line: "An Academy Website",
+        url: "https://unicadia.netlify.app/",
+        image: "/src/assets/Unicadia.png",
+        imageClassName: "h-full w-full object-contain p-4 bg-black",
       },
       {
         id: "p5",
-        title: "Sable Identity",
-        category: "Branding",
-        line: "Olive + ivory aesthetic.",
+        title: "NorthQuest Marketing",
+        category: "Websites",
+        line: "A portfolio website for marketing company.",
+        url: "https://northquestmarketing.co.uk/",
+        image:
+          "https://northquestmarketing.co.uk/assets/logo-northquest-BFE-nnqh.svg",
+        imageClassName: "h-full w-full object-contain p-4 bg-black",
       },
       {
         id: "p6",
-        title: "Atlas Companion",
-        category: "Apps",
-        line: "App landing + product story.",
+        title: "Wesbridge Associates",
+        category: "Websites",
+        line: "A website for a lawfirm in UK.",
+        url: "https://www.wesbridgeassociates.co.uk/",
+        image:
+          "https://www.wesbridgeassociates.co.uk/assets/wesbridge-logo-new-B4voiEXE.svg",
+        imageClassName: "h-full w-full object-contain p-4 bg-white",
       },
     ],
     [],
@@ -807,7 +860,10 @@ function Work() {
           testId="header-work"
         />
 
-        <div className="flex flex-wrap items-center gap-2" data-testid="tabs-work">
+        <div
+          className="hidden flex-wrap items-center gap-2"
+          data-testid="tabs-work"
+        >
           <div className="mr-1 inline-flex items-center gap-2 text-xs text-black/60 dark:text-white/60">
             <Filter className="h-3.5 w-3.5" />
             Filter
@@ -844,9 +900,22 @@ function Work() {
                 className="aspect-[4/3] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-black/5 dark:from-white/5 to-black/20 dark:to-black/40"
                 data-testid={`img-project-${p.id}`}
               >
-                <div className="flex h-full items-center justify-center text-xs text-black/60 dark:text-white/60">
-                  Preview image placeholder
-                </div>
+                {p.render ? (
+                  p.render
+                ) : p.image ? (
+                  <img
+                    src={p.image}
+                    alt={p.title}
+                    className={
+                      p.imageClassName ??
+                      "h-full w-full object-contain p-8 bg-white dark:bg-black/20"
+                    }
+                  />
+                ) : (
+                  <div className="flex h-full items-center justify-center text-xs text-black/60 dark:text-white/60">
+                    Preview image placeholder
+                  </div>
+                )}
               </div>
               <div className="mt-4 flex items-center justify-between">
                 <div>
@@ -863,12 +932,24 @@ function Work() {
                     {p.category}
                   </div>
                 </div>
-                <div
-                  className="rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-2"
-                  data-testid={`button-project-open-${p.id}`}
-                >
-                  <ArrowRight className="h-4 w-4 text-[hsl(var(--primary))]" />
-                </div>
+                {p.url ? (
+                  <a
+                    href={p.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-2 hover:bg-primary/10 transition-colors"
+                    data-testid={`button-project-open-${p.id}`}
+                  >
+                    <ArrowRight className="h-4 w-4 text-[hsl(var(--primary))]" />
+                  </a>
+                ) : (
+                  <div
+                    className="rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-2"
+                    data-testid={`button-project-open-${p.id}`}
+                  >
+                    <ArrowRight className="h-4 w-4 text-[hsl(var(--primary))]" />
+                  </div>
+                )}
               </div>
               <div
                 className="mt-3 text-sm text-black/70 dark:text-white/70"
@@ -887,13 +968,53 @@ function Work() {
 }
 
 function Team() {
-  const people = useMemo(
-    () =>
-      Array.from({ length: 8 }).map((_, i) => ({
-        id: `t${i + 1}`,
-        name: `Teammate ${i + 1}`,
+  type TeamMember = {
+    id: string;
+    name: string;
+    role: string;
+    image?: string;
+    imagePosition?: string;
+  };
+
+  const people = useMemo<TeamMember[]>(
+    () => [
+      {
+        id: `t1`,
+        name: `Hamza Nayab`,
+        role: "CEO",
+        image: "/src/assets/hamzanayab.jpg",
+      },
+      {
+        id: `t2`,
+        name: `Zainab Iqbal`,
+        role: "CTO",
+        image: "/src/assets/zainab.jpg",
+        imagePosition: "center 20%",
+      },
+      {
+        id: `t3`,
+        name: `Rana Talha`,
+        role: "COO",
+        image: "/src/assets/Talha.jpg",
+      },
+      {
+        id: `t4`,
+        name: `Daniyal Rao`,
+        role: "BDM",
+        image: "/src/assets/dani.jpg",
+      },
+      {
+        id: `t5`,
+        name: `Farheen Ather`,
+        role: "BDM",
+        image: "/src/assets/farheen.jpg",
+      },
+      ...Array.from({ length: 3 }).map((_, i) => ({
+        id: `t${i + 6}`,
+        name: `Teammate ${i + 6}`,
         role: "Creative + Build",
       })),
+    ],
     [],
   );
 
@@ -908,7 +1029,10 @@ function Team() {
             testId="header-team"
           />
 
-          <div className="flex justify-start lg:justify-end" data-testid="team-cta">
+          <div
+            className="flex justify-start lg:justify-end"
+            data-testid="team-cta"
+          >
             <GradientButton
               testId="button-meet-team"
               variant="outline"
@@ -921,48 +1045,71 @@ function Team() {
           </div>
         </div>
 
-        <motion.div
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-120px" }}
-          variants={{ show: { transition: { staggerChildren: 0.06 } } }}
-          className="mt-10 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
-          data-testid="grid-team"
-        >
-          {people.map((p) => (
-            <motion.div
-              key={p.id}
-              variants={{ hidden: { opacity: 0, y: 10 }, show: { opacity: 1, y: 0 } }}
-              className="group"
-              data-testid={`card-team-${p.id}`}
-            >
-              <div className="glass gradient-border relative overflow-hidden rounded-3xl p-3 transition-all group-hover:olive-glow">
-                <div
-                  className="aspect-[3/4] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-black/5 dark:from-white/5 to-black/20 dark:to-black/50"
-                  data-testid={`img-team-${p.id}`}
-                >
-                  <div className="flex h-full items-center justify-center text-xs text-black/60 dark:text-white/60">
-                    Profile image
+        <div className="relative mt-10 overflow-hidden" data-testid="carousel-team">
+          <motion.div
+            className="flex gap-6"
+            animate={{
+              x: [0, -2400],
+            }}
+            transition={{
+              x: {
+                repeat: Infinity,
+                repeatType: "loop",
+                duration: 40,
+                ease: "linear",
+              },
+            }}
+          >
+            {[...people, ...people, ...people].map((p, idx) => (
+              <motion.div
+                key={`${p.id}-${idx}`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                className="group flex-shrink-0 w-[280px]"
+                data-testid={`card-team-${p.id}-${idx}`}
+              >
+                <div className="glass gradient-border relative overflow-hidden rounded-3xl p-4 transition-all hover:scale-105 group-hover:olive-glow h-full">
+                  <div
+                    className="aspect-[3/4] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-black/5 dark:from-white/5 to-black/20 dark:to-black/50"
+                    data-testid={`img-team-${p.id}`}
+                  >
+                    {p.image ? (
+                      <img
+                        src={p.image}
+                        alt={p.name}
+                        className="h-full w-full object-cover"
+                        style={
+                          p.imagePosition
+                            ? { objectPosition: p.imagePosition }
+                            : undefined
+                        }
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center text-xs text-black/60 dark:text-white/60">
+                        Profile image
+                      </div>
+                    )}
+                  </div>
+                  <div className="mt-4 px-1">
+                    <div
+                      className="text-base font-semibold text-foreground"
+                      data-testid={`text-team-name-${p.id}`}
+                    >
+                      {p.name}
+                    </div>
+                    <div
+                      className="mt-1 text-sm text-black/60 dark:text-white/60"
+                      data-testid={`text-team-role-${p.id}`}
+                    >
+                      {p.role}
+                    </div>
                   </div>
                 </div>
-                <div className="mt-3 px-1">
-                  <div
-                    className="text-sm font-semibold text-foreground"
-                    data-testid={`text-team-name-${p.id}`}
-                  >
-                    {p.name}
-                  </div>
-                  <div
-                    className="mt-0.5 text-xs text-black/60 dark:text-white/60"
-                    data-testid={`text-team-role-${p.id}`}
-                  >
-                    {p.role}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
 
         <div className="mt-16 section-divider" aria-hidden />
       </div>
@@ -973,8 +1120,16 @@ function Team() {
 function Testimonials() {
   const items = useMemo(
     () => [
-      { id: "r1", name: "Client A", line: "It felt premium from the first scroll." },
-      { id: "r2", name: "Client B", line: "Clean story. Strong conversion energy." },
+      {
+        id: "r1",
+        name: "Client A",
+        line: "It felt premium from the first scroll.",
+      },
+      {
+        id: "r2",
+        name: "Client B",
+        line: "Clean story. Strong conversion energy.",
+      },
       { id: "r3", name: "Client C", line: "Tasteful design, fast execution." },
     ],
     [],
@@ -1005,10 +1160,16 @@ function Testimonials() {
           {items.map((t) => (
             <motion.div
               key={t.id}
-              variants={{ hidden: { opacity: 0, y: 12 }, show: { opacity: 1, y: 0 } }}
+              variants={{
+                hidden: { opacity: 0, y: 12 },
+                show: { opacity: 1, y: 0 },
+              }}
             >
               <GlassCard testId={`card-testimonial-${t.id}`}>
-                <div className="flex items-center gap-1" data-testid={`stars-${t.id}`}>
+                <div
+                  className="flex items-center gap-1"
+                  data-testid={`stars-${t.id}`}
+                >
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
                       key={i}
@@ -1066,7 +1227,11 @@ function Contact() {
   };
 
   return (
-    <section id="contact" className="relative py-20" data-testid="section-contact">
+    <section
+      id="contact"
+      className="relative py-20"
+      data-testid="section-contact"
+    >
       <div className="mx-auto max-w-6xl px-4">
         <div className="grid gap-10 lg:grid-cols-2">
           <div>
@@ -1077,7 +1242,10 @@ function Contact() {
               testId="header-contact"
             />
 
-            <div className="glass rounded-3xl p-6 space-y-6" data-testid="card-contact-info">
+            <div
+              className="glass rounded-3xl p-6 space-y-6"
+              data-testid="card-contact-info"
+            >
               <div className="flex items-center gap-4">
                 <div className="grid h-12 w-12 place-items-center rounded-2xl border border-white/10 dark:bg-white/5 bg-black/5">
                   <MessageCircle className="h-6 w-6 text-primary" />
@@ -1086,7 +1254,9 @@ function Contact() {
                   <div className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40">
                     WhatsApp
                   </div>
-                  <div className="text-base font-bold">{siteConfig.whatsappNumber}</div>
+                  <div className="text-base font-bold">
+                    {siteConfig.whatsappNumber}
+                  </div>
                 </div>
               </div>
 
@@ -1098,7 +1268,9 @@ function Contact() {
                   <div className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40">
                     Email
                   </div>
-                  <div className="text-base font-bold">{(siteConfig as any).emailPlaceholder}</div>
+                  <div className="text-base font-bold">
+                    {(siteConfig as any).emailPlaceholder}
+                  </div>
                 </div>
               </div>
 
@@ -1110,7 +1282,9 @@ function Contact() {
                   <div className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40">
                     Office
                   </div>
-                  <div className="text-base font-bold">{(siteConfig as any).officeAddress}</div>
+                  <div className="text-base font-bold">
+                    {(siteConfig as any).officeAddress}
+                  </div>
                 </div>
               </div>
 
@@ -1147,7 +1321,9 @@ function Contact() {
                   onChange={(e) => setName(e.target.value)}
                   className={cn(
                     "mt-2 h-12 rounded-2xl border-white/10 dark:bg-white/5 bg-black/5 dark:text-white text-black placeholder:text-black/20 dark:placeholder:text-white/20",
-                    errors.name ? "ring-1 ring-red-500/40" : "focus-visible:ring-primary/40",
+                    errors.name
+                      ? "ring-1 ring-red-500/40"
+                      : "focus-visible:ring-primary/40",
                   )}
                   placeholder="Your full name"
                   data-testid="input-name"
@@ -1166,7 +1342,9 @@ function Contact() {
                   onChange={(e) => setContact(e.target.value)}
                   className={cn(
                     "mt-2 h-12 rounded-2xl border-white/10 dark:bg-white/5 bg-black/5 dark:text-white text-black placeholder:text-black/20 dark:placeholder:text-white/20",
-                    errors.contact ? "ring-1 ring-red-500/40" : "focus-visible:ring-primary/40",
+                    errors.contact
+                      ? "ring-1 ring-red-500/40"
+                      : "focus-visible:ring-primary/40",
                   )}
                   placeholder="How can we reach you?"
                   data-testid="input-contact"
@@ -1185,7 +1363,9 @@ function Contact() {
                   onChange={(e) => setMessage(e.target.value)}
                   className={cn(
                     "mt-2 min-h-32 rounded-2xl border-white/10 dark:bg-white/5 bg-black/5 dark:text-white text-black placeholder:text-black/20 dark:placeholder:text-white/20",
-                    errors.message ? "ring-1 ring-red-500/40" : "focus-visible:ring-primary/40",
+                    errors.message
+                      ? "ring-1 ring-red-500/40"
+                      : "focus-visible:ring-primary/40",
                   )}
                   placeholder="Tell us about your vision..."
                   data-testid="input-message"
@@ -1214,32 +1394,53 @@ function Contact() {
   );
 }
 
-function Footer() {
+function Footer({ theme }: { theme: string }) {
   return (
     <footer className="relative pb-14 pt-10" data-testid="footer">
       <div className="mx-auto max-w-6xl px-4">
         <div className="glass rounded-3xl p-6">
           <div className="grid gap-8 md:grid-cols-3">
             <div>
-              <div className="flex items-center gap-3" data-testid="footer-brand">
-                <div className="h-9 w-9 overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5">
-                  <img
-                    src={siteConfig.logoPath}
-                    alt={siteConfig.brandName}
-                    className="h-full w-full object-cover"
-                    data-testid="img-footer-logo"
-                  />
+              <div
+                className="flex items-center gap-3"
+                data-testid="footer-brand"
+              >
+                <div className="h-14 w-14 overflow-hidden">
+                  {theme === "dark" ? (
+                    <img
+                      src={siteConfig.darkLogoPath}
+                      alt={siteConfig.brandName}
+                      className="h-full w-full object-cover"
+                      data-testid="img-footer-logo"
+                    />
+                  ) : (
+                    <img
+                      src={siteConfig.logoPath}
+                      alt={siteConfig.brandName}
+                      className="h-full w-full object-cover"
+                      data-testid="img-footer-logo"
+                    />
+                  )}
                 </div>
                 <div>
-                  <div className="text-sm font-semibold text-foreground" data-testid="text-footer-name">
+                  <div
+                    className="text-sm font-semibold text-foreground"
+                    data-testid="text-footer-name"
+                  >
                     {siteConfig.brandName}
                   </div>
-                  <div className="text-xs text-black/60 dark:text-white/60" data-testid="text-footer-tagline">
+                  <div
+                    className="text-xs text-black/60 dark:text-white/60"
+                    data-testid="text-footer-tagline"
+                  >
                     {siteConfig.brandTagline}
                   </div>
                 </div>
               </div>
-              <p className="mt-4 text-sm text-black/70 dark:text-white/70" data-testid="text-footer-desc">
+              <p
+                className="mt-4 text-sm text-black/70 dark:text-white/70"
+                data-testid="text-footer-desc"
+              >
                 Placeholder copy. Premium tone. Story-first layout.
               </p>
             </div>
@@ -1273,7 +1474,10 @@ function Footer() {
               >
                 Social
               </div>
-              <div className="mt-4 flex items-center gap-2" data-testid="footer-social">
+              <div
+                className="mt-4 flex items-center gap-2"
+                data-testid="footer-social"
+              >
                 {[
                   { i: Linkedin, id: "linkedin" },
                   { i: Instagram, id: "instagram" },
@@ -1289,8 +1493,12 @@ function Footer() {
                   </a>
                 ))}
               </div>
-              <div className="mt-5 text-xs text-black/60 dark:text-white/60" data-testid="text-footer-copy">
-                © {new Date().getFullYear()} {siteConfig.brandName}. All rights reserved.
+              <div
+                className="mt-5 text-xs text-black/60 dark:text-white/60"
+                data-testid="text-footer-copy"
+              >
+                © {new Date().getFullYear()} {siteConfig.brandName}. All rights
+                reserved.
               </div>
             </div>
           </div>
@@ -1301,7 +1509,33 @@ function Footer() {
 }
 
 export default function Home() {
-  const ids = useMemo(() => navLinks.map((l: (typeof navLinks)[number]) => l.id), []);
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== "undefined") {
+      return document.documentElement.classList.contains("dark")
+        ? "dark"
+        : "light";
+    }
+    return "dark";
+  });
+
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("dark");
+      setTheme(isDark ? "dark" : "light");
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const ids = useMemo(
+    () => navLinks.map((l: (typeof navLinks)[number]) => l.id),
+    [],
+  );
   const active = useActiveSection(ids);
 
   return (
@@ -1320,7 +1554,7 @@ export default function Home() {
         <Contact />
       </main>
 
-      <Footer />
+      <Footer theme={theme} />
     </div>
   );
 }

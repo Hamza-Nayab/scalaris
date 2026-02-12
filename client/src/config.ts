@@ -1,7 +1,8 @@
 export const siteConfig = {
-  brandName: "Olive Atelier",
+  brandName: "Scalaris",
   brandTagline: "Personal brands, beautifully presented.",
-  logoPath: "/favicon.png",
+  logoPath: "/src/assets/light.png",
+  darkLogoPath: "/src/assets/dark.png",
   whatsappNumber: "+971504486615",
   emailPlaceholder: "hello@yourbrand.com",
   primaryThemeColor: {
@@ -15,9 +16,9 @@ export const siteConfig = {
       600: "78 35% 38%",
       700: "78 35% 30%",
       800: "78 35% 22%",
-      900: "78 35% 16%"
-    }
-  }
+      900: "78 35% 16%",
+    },
+  },
 } as const;
 
 export const navLinks = [
@@ -27,7 +28,7 @@ export const navLinks = [
   { id: "work", label: "Work" },
   { id: "team", label: "Team" },
   { id: "testimonials", label: "Testimonials" },
-  { id: "contact", label: "Contact" }
+  { id: "contact", label: "Contact" },
 ] as const;
 
 export type NavLink = (typeof navLinks)[number];

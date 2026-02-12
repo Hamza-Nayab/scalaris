@@ -1,9 +1,9 @@
 export const siteConfig = {
-  brandName: "Olive",
+  brandName: "Scalaris",
   brandTagline: "Elevating Identities.",
   logoPath: "/favicon.png",
   whatsappNumber: "+971504486615",
-  emailPlaceholder: "hello@olive.ae",
+  emailPlaceholder: "hello@scalaris.ae",
   officeAddress: "Business Bay, Dubai, UAE",
   primaryThemeColor: {
     olive: {
