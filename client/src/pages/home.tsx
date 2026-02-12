@@ -1045,7 +1045,10 @@ function Team() {
           </div>
         </div>
 
-        <div className="relative mt-10 overflow-hidden" data-testid="carousel-team">
+        <div
+          className="relative mt-10 overflow-hidden"
+          data-testid="carousel-team"
+        >
           <motion.div
             className="flex gap-6"
             animate={{
