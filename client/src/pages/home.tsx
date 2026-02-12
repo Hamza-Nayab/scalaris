@@ -1009,9 +1009,15 @@ function Team() {
         role: "BDM",
         image: "/farheen.jpg",
       },
-      ...Array.from({ length: 3 }).map((_, i) => ({
-        id: `t${i + 6}`,
-        name: `Teammate ${i + 6}`,
+      {
+        id: `t6`,
+        name: `Hamza Mumtaz`,
+        role: "BDM",
+        image: "/hamza.png",
+      },
+      ...Array.from({ length: 2 }).map((_, i) => ({
+        id: `t${i + 7}`,
+        name: `Teammate ${i + 7}`,
         role: "Creative + Build",
       })),
     ],
