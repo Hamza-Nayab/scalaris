@@ -1,8 +1,8 @@
 export const siteConfig = {
   brandName: "Scalaris",
   brandTagline: "Personal brands, beautifully presented.",
-  logoPath: "/src/assets/light.png",
-  darkLogoPath: "/src/assets/dark.png",
+  logoPath: "/light.png",
+  darkLogoPath: "/dark.png",
   whatsappNumber: "+971504486615",
   emailPlaceholder: "hello@yourbrand.com",
   primaryThemeColor: {
