@@ -526,7 +526,7 @@ function Hero() {
               <div className="absolute inset-0 noise" aria-hidden />
               <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-white/5 to-black/40">
                 <img
-                  src="/src/assets/hero-bg.jpg"
+                  src="/hero-bg.jpg"
                   alt="Premium Branding"
                   className="absolute inset-0 h-full w-full object-cover opacity-60 mix-blend-overlay"
                 />
