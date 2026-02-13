@@ -9,6 +9,7 @@ import {
   Linkedin,
   Mail,
   MapPin,
+  Menu,
   MessageCircle,
   Moon,
   Sparkles,
@@ -16,6 +17,7 @@ import {
   Sun,
   Users,
   Wand2,
+  X,
 } from "lucide-react";
 
 function useTheme() {
@@ -50,6 +52,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { toast } from "sonner";
 
 function useActiveSection(sectionIds: string[]) {
@@ -64,26 +67,40 @@ function useActiveSection(sectionIds: string[]) {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        // Find the section that's most visible in the viewport
         const visible = entries
           .filter((e) => e.isIntersecting)
+          .map((e) => ({
+            id: e.target.id,
+            ratio: e.intersectionRatio,
+            rect: e.target.getBoundingClientRect(),
+          }))
           .sort((a, b) => {
-            // Priority: element covering more of the viewport center
-            const rectA = a.target.getBoundingClientRect();
-            const rectB = b.target.getBoundingClientRect();
-            const center = window.innerHeight / 2;
-            const distA = Math.abs((rectA.top + rectA.bottom) / 2 - center);
-            const distB = Math.abs((rectB.top + rectB.bottom) / 2 - center);
-            return distA - distB;
+            // Prioritize sections closer to the top of viewport
+            const topA = Math.max(0, a.rect.top);
+            const topB = Math.max(0, b.rect.top);
+            
+            // If both are near the top (within 120px), pick the one that's higher
+            if (topA < 120 && topB < 120) {
+              return topA - topB;
+            }
+            
+            // If one is near the top and the other isn't, prefer the one near the top
+            if (topA < 120) return -1;
+            if (topB < 120) return 1;
+            
+            // Otherwise prefer higher intersection ratio
+            return b.ratio - a.ratio;
           });
 
-        if (visible[0]?.target?.id) {
-          setActive(visible[0].target.id);
+        if (visible[0]?.id) {
+          setActive(visible[0].id);
         }
       },
       {
         root: null,
-        threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
-        rootMargin: "-10% 0px -10% 0px",
+        threshold: [0, 0.15, 0.3, 0.5, 0.7, 0.85, 1],
+        rootMargin: "-90px 0px -30% 0px",
       },
     );
 
@@ -273,6 +290,7 @@ function CursorGlow() {
 
 function Navbar({ activeId }: { activeId: string }) {
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggle } = useTheme();
 
   useEffect(() => {
@@ -281,6 +299,11 @@ function Navbar({ activeId }: { activeId: string }) {
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  const handleNavClick = (id: string) => {
+    scrollToId(id);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <div className="fixed left-0 right-0 top-0 z-50" data-testid="nav-wrap">
@@ -367,6 +390,73 @@ function Navbar({ activeId }: { activeId: string }) {
                   <Moon className="h-4 w-4" />
                 )}
               </button>
+
+              {/* Mobile Menu Button */}
+              <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+                <SheetTrigger asChild>
+                  <button
+                    className="md:hidden p-2 rounded-xl dark:bg-white/5 bg-black/5 hover:bg-white/10 transition-colors"
+                    data-testid="button-mobile-menu"
+                  >
+                    <Menu className="h-5 w-5" />
+                  </button>
+                </SheetTrigger>
+                <SheetContent
+                  side="right"
+                  className="w-[300px] sm:w-[400px] dark:bg-black/95 bg-white/95 backdrop-blur-xl border-l border-black/10 dark:border-white/10"
+                >
+                  <div className="flex flex-col gap-8 mt-8">
+                    <div className="flex flex-col gap-2">
+                      {navLinks.map((l: (typeof navLinks)[number]) => {
+                        const active = activeId === l.id;
+                        return (
+                          <button
+                            key={l.id}
+                            type="button"
+                            onClick={() => handleNavClick(l.id)}
+                            className={cn(
+                              "group relative rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-wider transition-all duration-200 text-left",
+                              "text-black/60 dark:text-white/60 hover:text-primary dark:hover:text-white",
+                              active
+                                ? "text-primary dark:text-white bg-primary/5 dark:bg-white/5"
+                                : "",
+                            )}
+                            data-testid={`link-mobile-nav-${l.id}`}
+                          >
+                            {l.label}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    <div className="flex flex-col gap-3 pt-4 border-t border-black/10 dark:border-white/10">
+                      <a
+                        href={buildWaLink(
+                          `Hello ${siteConfig.brandName}, I want a personalized branding website.`,
+                        )}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={cn(
+                          "flex items-center justify-center gap-2 rounded-xl border border-black/10 dark:border-white/10 dark:bg-white/5 bg-black/5 px-4 py-3 text-xs font-black uppercase tracking-[0.15em]",
+                          "transition-all hover:bg-primary hover:text-white",
+                        )}
+                        data-testid="button-whatsapp-mobile"
+                      >
+                        WhatsApp
+                      </a>
+                      <button
+                        onClick={() => handleNavClick("contact")}
+                        className="w-full rounded-xl bg-gradient-to-r from-primary to-primary/80 px-4 py-3 text-xs font-black uppercase tracking-[0.15em] text-white transition-all hover:shadow-lg"
+                        data-testid="button-start-mobile"
+                      >
+                        Let's Talk
+                      </button>
+                    </div>
+                  </div>
+                </SheetContent>
+              </Sheet>
+
+              {/* Desktop CTAs */}
               <a
                 href={buildWaLink(
                   `Hello ${siteConfig.brandName}, I want a personalized branding website.`,
@@ -381,14 +471,13 @@ function Navbar({ activeId }: { activeId: string }) {
               >
                 WhatsApp
               </a>
-              <GradientButton
-                testId="button-start-nav"
+              <button
                 onClick={() => scrollToId("contact")}
+                className="hidden md:inline-flex items-center rounded-xl bg-gradient-to-r from-primary to-primary/80 px-4 py-2 text-[10px] font-black uppercase tracking-[0.15em] text-white transition-all hover:shadow-lg"
+                data-testid="button-start-nav"
               >
-                <span className="font-black uppercase tracking-[0.15em] text-[10px]">
-                  Let's Talk
-                </span>
-              </GradientButton>
+                Let's Talk
+              </button>
             </div>
           </div>
         </div>
@@ -1548,7 +1637,7 @@ export default function Home() {
   const active = useActiveSection(ids);
 
   return (
-    <div className="relative min-h-screen bg-background">
+    <div className="relative min-h-screen overflow-x-hidden bg-background">
       <TopProgress />
       <CursorGlow />
       <Navbar activeId={active} />
