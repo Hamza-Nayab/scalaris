@@ -79,16 +79,16 @@ function useActiveSection(sectionIds: string[]) {
             // Prioritize sections closer to the top of viewport
             const topA = Math.max(0, a.rect.top);
             const topB = Math.max(0, b.rect.top);
-            
+
             // If both are near the top (within 120px), pick the one that's higher
             if (topA < 120 && topB < 120) {
               return topA - topB;
             }
-            
+
             // If one is near the top and the other isn't, prefer the one near the top
             if (topA < 120) return -1;
             if (topB < 120) return 1;
-            
+
             // Otherwise prefer higher intersection ratio
             return b.ratio - a.ratio;
           });
