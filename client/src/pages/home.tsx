@@ -1387,9 +1387,7 @@ function Contact() {
                   <div className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40">
                     Email
                   </div>
-                  <div className="text-base font-bold">
-                    hello@scalaris.tech
-                  </div>
+                  <div className="text-base font-bold">hello@scalaris.tech</div>
                 </div>
               </div>
 
@@ -1401,9 +1399,7 @@ function Contact() {
                   <div className="text-[10px] font-black uppercase tracking-widest dark:text-white/40 text-black/40">
                     Office
                   </div>
-                  <div className="text-base font-bold">
-                    Port Saeed, Dubai
-                  </div>
+                  <div className="text-base font-bold">Port Saeed, Dubai</div>
                 </div>
               </div>
 
@@ -1560,7 +1556,10 @@ function Footer({ theme }: { theme: string }) {
                 className="mt-4 text-sm text-black/70 dark:text-white/70"
                 data-testid="text-footer-desc"
               >
-                Scalaris is a premium branding studio crafting digital identities that convert. Based in Dubai, we specialize in story-led design, strategic positioning, and high-performance websites for ambitious brands.
+                Scalaris is a premium branding studio crafting digital
+                identities that convert. Based in Dubai, we specialize in
+                story-led design, strategic positioning, and high-performance
+                websites for ambitious brands.
               </p>
             </div>
 
@@ -1598,8 +1597,16 @@ function Footer({ theme }: { theme: string }) {
                 data-testid="footer-social"
               >
                 {[
-                  { i: Linkedin, id: "linkedin", url: "https://www.linkedin.com/in/scalaris-tech-39ba323b0/" },
-                  { i: Instagram, id: "instagram", url: "https://www.instagram.com/scalaris.tech?igsh=bHBwNGdiY2hhaWNq" },
+                  {
+                    i: Linkedin,
+                    id: "linkedin",
+                    url: "https://www.linkedin.com/in/scalaris-tech-39ba323b0/",
+                  },
+                  {
+                    i: Instagram,
+                    id: "instagram",
+                    url: "https://www.instagram.com/scalaris.tech?igsh=bHBwNGdiY2hhaWNq",
+                  },
                 ].map(({ i: Icon, id, url }) => (
                   <a
                     key={id}
