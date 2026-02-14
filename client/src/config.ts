@@ -4,7 +4,7 @@ export const siteConfig = {
   logoPath: "/light.png",
   darkLogoPath: "/dark.png",
   whatsappNumber: "+971504486615",
-  emailPlaceholder: "hello@yourbrand.com",
+  emailPlaceholder: "hello@scalaris.tech",
   primaryThemeColor: {
     olive: {
       50: "78 35% 88%",

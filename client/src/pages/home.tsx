@@ -863,15 +863,26 @@ function Work() {
     () => [
       {
         id: "p1",
-        title: "Sport Pro Tech",
+        title: "Wesbridge Associates",
         category: "Websites",
-        line: "Dynamic sports platform with seamless UX.",
-        url: "https://sportprotech.com/#",
-        image: "https://sportprotech.com/assets/logo-sportprotech-TbApeHD3.png",
-        imageClassName: "h-full w-full object-contain p-4 bg-black",
+        line: "A website for a lawfirm in UK.",
+        url: "https://www.wesbridgeassociates.co.uk/",
+        image:
+          "https://www.wesbridgeassociates.co.uk/assets/wesbridge-logo-new-B4voiEXE.svg",
+        imageClassName: "h-full w-full object-contain p-4 bg-white",
       },
       {
         id: "p2",
+        title: "NorthQuest Marketing",
+        category: "Websites",
+        line: "A portfolio website for marketing company.",
+        url: "https://northquestmarketing.co.uk/",
+        image:
+          "https://northquestmarketing.co.uk/assets/logo-northquest-BFE-nnqh.svg",
+        imageClassName: "h-full w-full object-contain p-4 bg-black",
+      },
+      {
+        id: "p3",
         title: "Dubai Medical Research Forum",
         category: "Websites",
         line: "Registration platform for DHA-backed medical research forum.",
@@ -880,10 +891,11 @@ function Work() {
         imageClassName: "h-full w-full object-contain p-4 bg-black",
       },
       {
-        id: "p3",
+        id: "p4",
         title: "Operative Zainab",
         category: "Websites",
         line: "Portfolio with a custom terminal theme + integrated game.",
+        url: "https://www.zainab.codes/",
         render: (
           <div className="flex h-full w-full items-center justify-center rounded-2xl bg-black">
             <div className="w-full px-5 py-6 text-left">
@@ -899,33 +911,22 @@ function Work() {
         ),
       },
       {
-        id: "p4",
+        id: "p5",
+        title: "Sport Pro Tech",
+        category: "Websites",
+        line: "Dynamic sports platform with seamless UX.",
+        url: "https://sportprotech.com/#",
+        image: "https://sportprotech.com/assets/logo-sportprotech-TbApeHD3.png",
+        imageClassName: "h-full w-full object-contain p-4 bg-black",
+      },
+      {
+        id: "p6",
         title: "UniCadia",
         category: "Websites",
         line: "An Academy Website",
         url: "https://unicadia.netlify.app/",
         image: "/Unicadia.png",
         imageClassName: "h-full w-full object-contain p-4 bg-black",
-      },
-      {
-        id: "p5",
-        title: "NorthQuest Marketing",
-        category: "Websites",
-        line: "A portfolio website for marketing company.",
-        url: "https://northquestmarketing.co.uk/",
-        image:
-          "https://northquestmarketing.co.uk/assets/logo-northquest-BFE-nnqh.svg",
-        imageClassName: "h-full w-full object-contain p-4 bg-black",
-      },
-      {
-        id: "p6",
-        title: "Wesbridge Associates",
-        category: "Websites",
-        line: "A website for a lawfirm in UK.",
-        url: "https://www.wesbridgeassociates.co.uk/",
-        image:
-          "https://www.wesbridgeassociates.co.uk/assets/wesbridge-logo-new-B4voiEXE.svg",
-        imageClassName: "h-full w-full object-contain p-4 bg-white",
       },
     ],
     [],
@@ -945,7 +946,7 @@ function Work() {
         <SectionHeader
           eyebrow="Work"
           title="A few projects in the right direction"
-          desc="Placeholders for now — curated like a gallery."
+          desc="Premium digital identities. Curated like a gallery."
           testId="header-work"
         />
 
@@ -1104,11 +1105,6 @@ function Team() {
         role: "BDM",
         image: "/hamza.png",
       },
-      ...Array.from({ length: 2 }).map((_, i) => ({
-        id: `t${i + 7}`,
-        name: `Teammate ${i + 7}`,
-        role: "Creative + Build",
-      })),
     ],
     [],
   );
@@ -1131,7 +1127,7 @@ function Team() {
             <GradientButton
               testId="button-meet-team"
               variant="outline"
-              onClick={() => toast("Team profiles coming soon.")}
+              onClick={() => scrollToId("contact")}
               className="border-black/20 dark:border-white/20 text-black/80 dark:text-white/80"
             >
               Meet the Team
@@ -1220,18 +1216,48 @@ function Testimonials() {
     () => [
       {
         id: "r1",
-        name: "Client A",
-        line: "It felt premium from the first scroll.",
+        name: "Sarah Ahmed",
+        line: "Exceeded our expectations. The attention to detail transformed our brand completely.",
+        rating: 5,
       },
       {
         id: "r2",
-        name: "Client B",
-        line: "Clean story. Strong conversion energy.",
+        name: "محمد علي",
+        line: "Professional, creative, and delivered on time. Highly recommended for any project.",
+        rating: 4.5,
       },
-      { id: "r3", name: "Client C", line: "Tasteful design, fast execution." },
+      {
+        id: "r3",
+        name: "James Mitchell",
+        line: "Premium quality work. They understood our vision perfectly.",
+        rating: 5,
+      },
     ],
     [],
   );
+
+  const renderStars = (rating: number) => {
+    return Array.from({ length: 5 }).map((_, i) => {
+      const fillPercentage =
+        i < Math.floor(rating)
+          ? 1
+          : i < rating
+            ? rating - Math.floor(rating)
+            : 0;
+
+      return (
+        <div key={i} className="relative h-4 w-4">
+          <Star className="h-4 w-4 text-[hsl(var(--primary))]/20" />
+          <div
+            className="absolute left-0 top-0 overflow-hidden"
+            style={{ width: `${fillPercentage * 100}%` }}
+          >
+            <Star className="h-4 w-4 fill-[hsl(var(--primary))]/80 text-[hsl(var(--primary))]/80" />
+          </div>
+        </div>
+      );
+    });
+  };
 
   return (
     <section
@@ -1243,7 +1269,7 @@ function Testimonials() {
         <SectionHeader
           eyebrow="Testimonials"
           title="Short words. Real signal."
-          desc="Placeholders, styled like trust markers."
+          desc="Words from those who trusted us with their vision."
           testId="header-testimonials"
         />
 
@@ -1268,12 +1294,7 @@ function Testimonials() {
                   className="flex items-center gap-1"
                   data-testid={`stars-${t.id}`}
                 >
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-4 w-4 fill-[hsl(var(--primary))]/30 text-[hsl(var(--primary))]"
-                    />
-                  ))}
+                  {renderStars(t.rating)}
                 </div>
                 <div
                   className="mt-4 text-sm text-black/80 dark:text-white/80"
@@ -1367,7 +1388,7 @@ function Contact() {
                     Email
                   </div>
                   <div className="text-base font-bold">
-                    {(siteConfig as any).emailPlaceholder}
+                    hello@scalaris.tech
                   </div>
                 </div>
               </div>
@@ -1381,7 +1402,7 @@ function Contact() {
                     Office
                   </div>
                   <div className="text-base font-bold">
-                    {(siteConfig as any).officeAddress}
+                    Port Saeed, Dubai
                   </div>
                 </div>
               </div>
@@ -1539,7 +1560,7 @@ function Footer({ theme }: { theme: string }) {
                 className="mt-4 text-sm text-black/70 dark:text-white/70"
                 data-testid="text-footer-desc"
               >
-                Placeholder copy. Premium tone. Story-first layout.
+                Scalaris is a premium branding studio crafting digital identities that convert. Based in Dubai, we specialize in story-led design, strategic positioning, and high-performance websites for ambitious brands.
               </p>
             </div>
 
@@ -1577,13 +1598,14 @@ function Footer({ theme }: { theme: string }) {
                 data-testid="footer-social"
               >
                 {[
-                  { i: Linkedin, id: "linkedin" },
-                  { i: Instagram, id: "instagram" },
-                  { i: Github, id: "github" },
-                ].map(({ i: Icon, id }) => (
+                  { i: Linkedin, id: "linkedin", url: "https://www.linkedin.com/in/scalaris-tech-39ba323b0/" },
+                  { i: Instagram, id: "instagram", url: "https://www.instagram.com/scalaris.tech?igsh=bHBwNGdiY2hhaWNq" },
+                ].map(({ i: Icon, id, url }) => (
                   <a
                     key={id}
-                    href="#"
+                    href={url}
+                    target="_blank"
+                    rel="noreferrer"
                     className="grid h-10 w-10 place-items-center rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 text-black/70 dark:text-white/70 hover:bg-black/10 dark:hover:bg-white/8"
                     data-testid={`link-social-${id}`}
                   >
