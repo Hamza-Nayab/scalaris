@@ -842,7 +842,71 @@ function Expertise() {
           })}
         </div>
 
+<<<<<<< Updated upstream
         <div className="mt-16 section-divider" aria-hidden />
+=======
+        {/* Technologies we use — moving logo marquee */}
+        <div className="mt-16 overflow-hidden">
+          <p className="mb-6 text-center text-sm font-medium text-black/60 dark:text-white/60">
+            Technologies we use
+          </p>
+          <div className="tech-marquee-wrap">
+            <div className="tech-marquee-track">
+              {[
+                { name: "MongoDB", slug: "mongodb", color: "47A248" },
+                { name: "Express", slug: "express", color: "000000", darkInvert: true },
+                { name: "React", slug: "react", color: "61DAFB" },
+                { name: "Node.js", slug: "nodedotjs", color: "339933" },
+                { name: "Next.js", slug: "nextdotjs", color: "000000", darkInvert: true },
+                { name: "Three.js", slug: "threedotjs", color: "000000", darkInvert: true },
+                { name: "WordPress", slug: "wordpress", color: "21759B" },
+                { name: "Tailwind CSS", slug: "tailwindcss", color: "06B6D4" },
+                { name: "Vite", slug: "vite", color: "646CFF" },
+              ].map((tech) => (
+                <img
+                  key={tech.slug}
+                  src={`https://cdn.simpleicons.org/${tech.slug}/${tech.color}`}
+                  alt={tech.name}
+                  title={tech.name}
+                  className={cn(
+                    "tech-marquee-logo h-9 w-9 flex-shrink-0 object-contain md:h-10 md:w-10",
+                    tech.darkInvert && "dark:invert dark:opacity-90"
+                  )}
+                  width={40}
+                  height={40}
+                />
+              ))}
+              {/* Duplicate for seamless loop */}
+              {[
+                { name: "MongoDB", slug: "mongodb", color: "47A248" },
+                { name: "Express", slug: "express", color: "000000", darkInvert: true },
+                { name: "React", slug: "react", color: "61DAFB" },
+                { name: "Node.js", slug: "nodedotjs", color: "339933" },
+                { name: "Next.js", slug: "nextdotjs", color: "000000", darkInvert: true },
+                { name: "Three.js", slug: "threedotjs", color: "000000", darkInvert: true },
+                { name: "WordPress", slug: "wordpress", color: "21759B" },
+                { name: "Tailwind CSS", slug: "tailwindcss", color: "06B6D4" },
+                { name: "Vite", slug: "vite", color: "646CFF" },
+              ].map((tech) => (
+                <img
+                  key={`dup-${tech.slug}`}
+                  src={`https://cdn.simpleicons.org/${tech.slug}/${tech.color}`}
+                  alt=""
+                  aria-hidden
+                  className={cn(
+                    "tech-marquee-logo h-9 w-9 flex-shrink-0 object-contain md:h-10 md:w-10",
+                    tech.darkInvert && "dark:invert dark:opacity-90"
+                  )}
+                  width={40}
+                  height={40}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-20 section-divider" aria-hidden />
+>>>>>>> Stashed changes
       </div>
     </section>
   );
