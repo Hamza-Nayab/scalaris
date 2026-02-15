@@ -184,22 +184,18 @@
   }
 
   .glass {
-    background: linear-gradient(
-      180deg,
-      hsl(var(--card) / 0.72),
-      hsl(var(--card) / 0.6)
-    );
+    background: linear-gradient(180deg,
+        hsl(var(--card) / 0.72),
+        hsl(var(--card) / 0.6));
     border: 1px solid hsl(var(--border) / 0.7);
     box-shadow: var(--shadow);
     backdrop-filter: blur(10px);
   }
 
   .dark .glass {
-    background: linear-gradient(
-      180deg,
-      hsl(222 30% 11% / 0.72),
-      hsl(222 30% 9% / 0.6)
-    );
+    background: linear-gradient(180deg,
+        hsl(222 30% 11% / 0.72),
+        hsl(222 30% 9% / 0.6));
     border: 1px solid hsl(220 18% 20% / 0.7);
   }
 
@@ -211,12 +207,10 @@
 
   .section-divider {
     height: 1px;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      hsl(var(--primary) / 0.45),
-      transparent
-    );
+    background: linear-gradient(90deg,
+        transparent,
+        hsl(var(--primary) / 0.45),
+        transparent);
   }
 
   .gradient-border {
@@ -228,12 +222,10 @@
     position: absolute;
     inset: -1px;
     border-radius: inherit;
-    background: linear-gradient(
-      135deg,
-      hsl(var(--primary) / 0.85),
-      hsl(84 32% 30% / 0.2),
-      hsl(210 20% 96% / 0.06)
-    );
+    background: linear-gradient(135deg,
+        hsl(var(--primary) / 0.85),
+        hsl(84 32% 30% / 0.2),
+        hsl(210 20% 96% / 0.06));
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
       linear-gradient(#000 0 0);
@@ -248,9 +240,6 @@
     opacity: 0.85;
     mix-blend-mode: screen;
   }
-<<<<<<< Updated upstream
-}
-=======
 
   /* Hero: grid background */
   .hero-grid-bg {
@@ -898,4 +887,3 @@
     }
   }
 }
->>>>>>> Stashed changes
