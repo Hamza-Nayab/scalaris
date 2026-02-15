@@ -320,6 +320,7 @@ function CursorGlow() {
 
 function Navbar({ activeId }: { activeId: string }) {
   const [scrolled, setScrolled] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, toggle } = useTheme();
 
@@ -335,24 +336,62 @@ function Navbar({ activeId }: { activeId: string }) {
     setMobileMenuOpen(false);
   };
 
+  const getNavScale = () => {
+    if (isHovered) return 1;
+    return scrolled ? 0.92 : 1;
+  };
+
+  const getNavPadding = () => {
+    if (isHovered) return "py-2.5";
+    return scrolled ? "py-1.5" : "py-2";
+  };
+
   return (
     <div className="fixed left-0 right-0 top-0 z-50" data-testid="nav-wrap">
       <div className="mx-auto max-w-6xl px-4">
-        <div
+        <motion.div
+          initial={false}
+          animate={{
+            scale: getNavScale(),
+            y: scrolled && !isHovered ? -2 : 0,
+          }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+            mass: 0.8,
+          }}
+          onHoverStart={() => setIsHovered(true)}
+          onHoverEnd={() => setIsHovered(false)}
           className={cn(
-            "mt-4 rounded-3xl border border-black/10 dark:border-white/10 dark:bg-black/30 bg-white/60 backdrop-blur-xl transition-all",
-            scrolled ? "py-1.5 shadow-lg" : "py-2",
+            "mt-4 rounded-3xl border border-black/10 dark:border-white/10 dark:bg-black/30 bg-white/60 backdrop-blur-xl transition-all duration-300 ease-out",
+            getNavPadding(),
+            scrolled ? "shadow-lg" : "",
+            isHovered ? "shadow-2xl ring-2 ring-primary/20" : "",
           )}
           data-testid="nav-bar"
         >
           <div className="flex items-center justify-between gap-3 px-4">
-            <button
+            <motion.button
               type="button"
               onClick={() => scrollToId("home")}
               className="group"
               data-testid="link-home-logo"
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
-              <div className="h-14 w-14 overflow-hidden">
+              <motion.div
+                className="overflow-hidden"
+                animate={{
+                  width: scrolled && !isHovered ? "3rem" : "3.5rem",
+                  height: scrolled && !isHovered ? "3rem" : "3.5rem",
+                }}
+                transition={{
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 25,
+                }}
+              >
                 <img
                   src={
                     theme === "dark"
@@ -363,8 +402,8 @@ function Navbar({ activeId }: { activeId: string }) {
                   className="h-full w-full object-cover"
                   data-testid="img-logo"
                 />
-              </div>
-            </button>
+              </motion.div>
+            </motion.button>
 
             <div
               className="hidden items-center gap-1 md:flex"
@@ -510,7 +549,7 @@ function Navbar({ activeId }: { activeId: string }) {
               </button>
             </div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );
