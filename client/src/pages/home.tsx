@@ -136,6 +136,35 @@ function buildWaLink(message: string) {
   return `https://wa.me/${phone}?text=${text}`;
 }
 
+/** Small CSS 3D floating shape for Process/Expertise sections */
+function FloatingShape3D({
+  className,
+  size = "sm",
+  delay = 0,
+}: {
+  className?: string;
+  size?: "sm" | "md";
+  delay?: number;
+}) {
+  const prefersReducedMotion = useReducedMotion();
+  return (
+    <div
+      className={cn("shape-3d-container", size === "md" && "shape-3d-container-md", className)}
+      aria-hidden
+      style={prefersReducedMotion ? undefined : { animationDelay: `${delay}ms` }}
+    >
+      <div className="shape-3d-cube">
+        <div className="shape-3d-face shape-3d-front" />
+        <div className="shape-3d-face shape-3d-back" />
+        <div className="shape-3d-face shape-3d-right" />
+        <div className="shape-3d-face shape-3d-left" />
+        <div className="shape-3d-face shape-3d-top" />
+        <div className="shape-3d-face shape-3d-bottom" />
+      </div>
+    </div>
+  );
+}
+
 function SectionHeader({
   eyebrow,
   title,
@@ -508,186 +537,144 @@ function Hero() {
   };
 
   return (
-    <section id="home" className="relative pt-28" data-testid="section-home">
-      <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
-        <div className="absolute left-[-120px] top-[-140px] h-[320px] w-[320px] rounded-full bg-[hsl(var(--primary))]/25 orb" />
-        <div className="absolute right-[-140px] top-[120px] h-[380px] w-[380px] rounded-full bg-emerald-400/10 orb" />
-        <div className="absolute left-[15%] top-[50%] h-[260px] w-[260px] rounded-full bg-white/5 orb" />
-      </div>
+    <section id="home" className="relative pt-28 overflow-x-hidden" data-testid="section-home">
+      <div className="hero-grid-bg" aria-hidden />
 
-      <div className="relative mx-auto max-w-6xl px-4">
-        <div
-          className="absolute inset-0 -z-10 rounded-[36px] noise"
-          aria-hidden
-        />
+      <main className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-12 md:pt-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <motion.div
+          variants={container}
+          initial={prefersReducedMotion ? false : "hidden"}
+          animate={prefersReducedMotion ? undefined : "show"}
+          className="z-10"
+          data-testid="hero-copy"
+        >
+          <motion.div variants={item}>
+            <div
+              className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-1 text-xs text-black/70 dark:text-white/70 mb-6"
+              data-testid="badge-hero"
+            >
+              <Wand2 className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
+              Dubai-based personalized web presence
+            </div>
+          </motion.div>
 
-        <div className="grid items-center gap-10 lg:grid-cols-2">
-          <motion.div
-            variants={container}
-            initial={prefersReducedMotion ? false : "hidden"}
-            animate={prefersReducedMotion ? undefined : "show"}
-            className="max-w-xl"
-            data-testid="hero-copy"
+          <motion.h1
+            variants={item}
+            className="mt-5 font-display text-4xl leading-[1.05] tracking-tight sm:text-5xl lg:text-6xl text-foreground"
+            data-testid="text-hero-title"
           >
-            <motion.div variants={item}>
-              <div
-                className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-1 text-xs text-black/70 dark:text-white/70"
-                data-testid="badge-hero"
-              >
-                <Wand2 className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
-                Dubai-based personalized web presence
-              </div>
-            </motion.div>
+            Your story, distilled into a premium online identity.
+          </motion.h1>
 
-            <motion.h1
-              variants={item}
-              className="mt-5 font-display text-4xl leading-[1.05] tracking-tight sm:text-5xl text-foreground"
-              data-testid="text-hero-title"
+          <motion.p
+            variants={item}
+            className="mt-4 text-sm leading-relaxed text-black/70 dark:text-white/70 sm:text-base max-w-lg"
+            data-testid="text-hero-sub"
+          >
+            Minimal. Elegant. Built to convert curiosity into clients.
+          </motion.p>
+
+          <motion.div
+            variants={item}
+            className="mt-7 flex flex-col gap-3 sm:flex-row"
+            data-testid="hero-ctas"
+          >
+            <GradientButton
+              testId="button-cta-start"
+              onClick={() => scrollToId("contact")}
             >
-              Your story, distilled into a premium online identity.
-            </motion.h1>
-
-            <motion.p
-              variants={item}
-              className="mt-4 text-sm leading-relaxed text-black/70 dark:text-white/70 sm:text-base"
-              data-testid="text-hero-sub"
+              Start Your Brand
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </GradientButton>
+            <GradientButton
+              testId="button-cta-work"
+              variant="ghost"
+              onClick={() => scrollToId("work")}
             >
-              Minimal. Elegant. Built to convert curiosity into clients.
-            </motion.p>
-
-            <motion.div
-              variants={item}
-              className="mt-7 flex flex-col gap-3 sm:flex-row"
-              data-testid="hero-ctas"
-            >
-              <GradientButton
-                testId="button-cta-start"
-                onClick={() => scrollToId("contact")}
-              >
-                Start Your Brand
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </GradientButton>
-
-              <GradientButton
-                testId="button-cta-work"
-                variant="ghost"
-                onClick={() => scrollToId("work")}
-              >
-                <span className="text-foreground">View Work</span>
-              </GradientButton>
-            </motion.div>
-
-            <motion.div
-              variants={item}
-              className="mt-8 flex flex-wrap items-center gap-3 text-xs text-black/60 dark:text-white/60"
-              data-testid="hero-meta"
-            >
-              {[
-                "Story-led Design",
-                "Premium UI",
-                "Considerate",
-                "Responsive",
-              ].map((t) => (
-                <span
-                  key={t}
-                  className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-1"
-                  data-testid={`pill-hero-${t}`}
-                >
-                  <Check className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
-                  {t}
-                </span>
-              ))}
-            </motion.div>
+              <span className="text-foreground">View Work</span>
+            </GradientButton>
           </motion.div>
 
           <motion.div
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
-            animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: "easeOut" }}
-            className="relative"
-            data-testid="hero-image"
+            variants={item}
+            className="mt-8 flex flex-wrap items-center gap-3 text-xs text-black/60 dark:text-white/60"
+            data-testid="hero-meta"
           >
-            <motion.div
-              className="glass gradient-border relative overflow-hidden rounded-[36px] p-5"
-              whileHover={{ y: -4 }}
-              transition={{ type: "spring", stiffness: 220, damping: 22 }}
-              data-testid="card-hero-image"
-            >
-              <div className="absolute inset-0 noise" aria-hidden />
-              <div className="relative aspect-[4/3] overflow-hidden rounded-[28px] border border-white/10 bg-gradient-to-br from-white/5 to-black/40">
-                <img
-                  src="/hero-bg.jpg"
-                  alt="Premium Branding"
-                  className="absolute inset-0 h-full w-full object-cover opacity-60 mix-blend-overlay"
-                />
-                <motion.div
-                  className="absolute -left-16 -top-16 h-48 w-48 rounded-full bg-[hsl(var(--primary))]/20 orb"
-                  animate={
-                    prefersReducedMotion
-                      ? undefined
-                      : { x: [0, 20, 0], y: [0, 14, 0] }
-                  }
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-                <motion.div
-                  className="absolute -bottom-20 -right-14 h-56 w-56 rounded-full bg-emerald-400/10 orb"
-                  animate={
-                    prefersReducedMotion
-                      ? undefined
-                      : { x: [0, -18, 0], y: [0, -10, 0] }
-                  }
-                  transition={{
-                    duration: 9,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                />
-              </div>
-
-              <div
-                className="relative mt-5 grid gap-3 sm:grid-cols-3"
-                data-testid="hero-stats"
+            {[
+              "Story-led Design",
+              "Premium UI",
+              "Considerate",
+              "Responsive",
+            ].map((t) => (
+              <span
+                key={t}
+                className="inline-flex items-center gap-2 rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-1"
+                data-testid={`pill-hero-${t}`}
               >
-                {[
-                  { k: "Timeline", v: "Fast" },
-                  { k: "Feel", v: "Premium" },
-                  { k: "Focus", v: "Conversion" },
-                ].map((s) => (
-                  <div
-                    key={s.k}
-                    className="rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-3"
-                    data-testid={`stat-${s.k}`}
-                  >
-                    <div
-                      className="text-xs text-black/60 dark:text-white/60"
-                      data-testid={`stat-key-${s.k}`}
-                    >
-                      {s.k}
-                    </div>
-                    <div
-                      className="mt-1 text-sm font-semibold text-foreground"
-                      data-testid={`stat-val-${s.k}`}
-                    >
-                      {s.v}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+                <Check className="h-3.5 w-3.5 text-[hsl(var(--primary))]" />
+                {t}
+              </span>
+            ))}
           </motion.div>
-        </div>
+        </motion.div>
 
-        <div className="mt-16 section-divider" aria-hidden />
-      </div>
+        {/* 3D Visualization Area */}
+        <motion.div
+          initial={prefersReducedMotion ? false : { opacity: 0, y: 18 }}
+          animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, ease: "easeOut" }}
+          className="scene-3d"
+          data-testid="hero-image"
+        >
+          <div className="floating-card-hero card-1 z-20" data-testid="card-live-viewing">
+            <div className="flex items-center gap-3 mb-2">
+              <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+              <span className="text-xs font-bold text-muted-foreground uppercase">Live Viewing</span>
+            </div>
+            <div className="text-lg font-bold text-glow-hero">148 Active Users</div>
+            <div className="text-[10px] text-muted-foreground mt-1">Virtual Tour: Penthouse 702</div>
+          </div>
+
+          <div className="floating-card-hero card-2 z-20" data-testid="card-market-sentiment">
+            <div className="flex justify-between items-end gap-8">
+              <div>
+                <div className="text-xs text-muted-foreground mb-1">Market Sentiment</div>
+                <div className="text-xl font-extrabold text-[hsl(var(--primary))]">+12.4%</div>
+              </div>
+              <div className="flex gap-1">
+                <div className="w-1 h-4 bg-muted rounded-full" />
+                <div className="w-1 h-6 bg-muted rounded-full" />
+                <div className="w-1 h-8 bg-[hsl(var(--primary))] rounded-full" />
+                <div className="w-1 h-5 bg-[hsl(var(--primary))] rounded-full" />
+              </div>
+            </div>
+          </div>
+
+          <div className="house-container">
+            <div className="hero-cube house-base">
+              <div className="hero-face front" />
+              <div className="hero-face back" />
+              <div className="hero-face left" />
+              <div className="hero-face right" />
+              <div className="hero-face top" />
+              <div className="hero-face bottom" />
+            </div>
+            <div className="hero-cube house-roof">
+              <div className="hero-face front" />
+              <div className="hero-face back" />
+            </div>
+            <div className="absolute inset-0 translate-y-24 blur-3xl bg-[hsl(var(--primary))]/20 rounded-full pointer-events-none" aria-hidden />
+          </div>
+        </motion.div>
+      </main>
+
+      <div className="max-w-7xl mx-auto px-4 mt-16 section-divider" aria-hidden />
     </section>
   );
 }
 
 function Story() {
+  const prefersReducedMotion = useReducedMotion();
   const steps = useMemo(
     () => [
       {
@@ -707,8 +694,17 @@ function Story() {
   );
 
   return (
-    <section id="story" className="relative py-20" data-testid="section-story">
-      <div className="mx-auto max-w-6xl px-4">
+    <section id="story" className="relative py-24 overflow-hidden" data-testid="section-story">
+      {/* Futuristic grid background */}
+      <div
+        className="process-grid-bg absolute inset-0 pointer-events-none"
+        aria-hidden
+      />
+      {/* 3D floating shapes */}
+      <FloatingShape3D className="absolute top-20 right-[10%] w-16 h-16 opacity-40" size="sm" delay={0} />
+      <FloatingShape3D className="absolute bottom-32 left-[8%] w-12 h-12 opacity-30" size="sm" delay={800} />
+
+      <div className="mx-auto max-w-6xl px-4 relative">
         <SectionHeader
           eyebrow="Process"
           title="From Idea → Identity → Digital Presence"
@@ -719,59 +715,115 @@ function Story() {
         <motion.div
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-120px" }}
-          variants={{ show: { transition: { staggerChildren: 0.12 } } }}
-          className="grid gap-5 md:grid-cols-3"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={{ show: { transition: { staggerChildren: 0.18, delayChildren: 0.1 } } }}
+          className="process-flow relative grid gap-6 md:grid-cols-3 md:gap-8"
           data-testid="grid-story"
+          style={{ perspective: "1200px" }}
         >
+          {/* Animated connector line (desktop) */}
+          <div
+            className="process-connector hidden md:block"
+            aria-hidden
+          >
+            <motion.span
+              className="process-connector-progress"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            />
+          </div>
+
           {steps.map((s, i) => (
             <motion.div
               key={s.title}
               variants={{
-                hidden: { opacity: 0, y: 14 },
-                show: { opacity: 1, y: 0 },
+                hidden: {
+                  opacity: 0,
+                  y: prefersReducedMotion ? 12 : 32,
+                  rotateX: prefersReducedMotion ? 0 : 12,
+                  transformPerspective: 1200,
+                },
+                show: {
+                  opacity: 1,
+                  y: 0,
+                  rotateX: 0,
+                  transition: { duration: prefersReducedMotion ? 0.3 : 0.6, ease: [0.22, 1, 0.36, 1] },
+                },
               }}
+              className="process-step-wrapper"
             >
-              <GlassCard testId={`card-story-${i}`} className="h-full">
-                <div className="flex items-center justify-between">
-                  <div
-                    className="text-xs font-medium text-black/60 dark:text-white/60"
+              <motion.div
+                className="process-step-card group h-full"
+                whileHover={
+                  prefersReducedMotion
+                    ? { y: -2 }
+                    : {
+                      y: -8,
+                      rotateX: 4,
+                      rotateY: 0,
+                      transition: { type: "spring", stiffness: 300, damping: 24 },
+                    }
+                }
+                style={{ transformStyle: "preserve-3d" }}
+                data-testid={`card-story-${i}`}
+              >
+                <div className="process-step-glow" aria-hidden />
+
+                <div className="flex items-start justify-between gap-4">
+                  <motion.div
+                    className="process-step-number"
                     data-testid={`text-story-step-${i}`}
+                    initial={{ scale: 0.6, opacity: 0 }}
+                    whileInView={{ scale: 1, opacity: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.2 + i * 0.12, duration: 0.5 }}
                   >
-                    Step {i + 1}
-                  </div>
+                    <span className="process-step-number-ring" />
+                    <span className="process-step-number-inner">{i + 1}</span>
+                  </motion.div>
                   <div
-                    className="rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-2 py-1 text-xs text-black/70 dark:text-white/70"
+                    className="rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 px-3 py-1.5 text-xs font-medium text-black/70 dark:text-white/70 tabular-nums"
                     data-testid={`badge-story-${i}`}
                   >
                     {s.title}
                   </div>
                 </div>
-                <div
-                  className="mt-4 font-display text-2xl tracking-tight text-foreground"
+
+                <h3
+                  className="mt-5 font-display text-2xl tracking-tight text-foreground"
                   data-testid={`text-story-title-${i}`}
                 >
                   {s.title}
-                </div>
+                </h3>
                 <p
-                  className="mt-2 text-sm leading-relaxed text-black/70 dark:text-white/70"
+                  className="mt-3 text-sm leading-relaxed text-black/70 dark:text-white/70 sm:whitespace-nowrap"
                   data-testid={`text-story-line-${i}`}
                 >
                   {s.line}
                 </p>
-                <div className="mt-5 h-1 w-14 rounded-full bg-[hsl(var(--primary))]/60" />
-              </GlassCard>
+
+                <motion.div
+                  className="mt-6 process-step-bar"
+                  initial={{ scaleX: 0 }}
+                  whileInView={{ scaleX: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.4 + i * 0.15, duration: 0.5 }}
+                />
+              </motion.div>
             </motion.div>
           ))}
         </motion.div>
 
-        <div className="mt-16 section-divider" aria-hidden />
+        <div className="mt-20 section-divider" aria-hidden />
       </div>
     </section>
   );
 }
 
 function Expertise() {
+  const prefersReducedMotion = useReducedMotion();
   const items = useMemo(
     () => [
       {
@@ -796,10 +848,15 @@ function Expertise() {
   return (
     <section
       id="expertise"
-      className="relative py-20"
+      className="relative py-24 overflow-hidden"
       data-testid="section-expertise"
     >
-      <div className="mx-auto max-w-6xl px-4">
+      <div
+        className="process-grid-bg absolute inset-0 pointer-events-none"
+        aria-hidden
+      />
+
+      <div className="mx-auto max-w-6xl px-4 relative">
         <SectionHeader
           eyebrow="Expertise"
           title="Three ways we build modern brands"
@@ -807,42 +864,99 @@ function Expertise() {
           testId="header-expertise"
         />
 
-        <div className="grid gap-5 md:grid-cols-3" data-testid="grid-expertise">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={{
+            show: {
+              transition: { staggerChildren: 0.15, delayChildren: 0.08 },
+            },
+          }}
+          className="grid gap-6 md:grid-cols-3 md:gap-8"
+          data-testid="grid-expertise"
+          style={{ perspective: "1000px" }}
+        >
           {items.map((it, idx) => {
             const Icon = it.icon;
             return (
-              <GlassCard key={it.title} testId={`card-expertise-${idx}`}>
-                <div className="flex items-start gap-4">
-                  <div
-                    className="grid h-11 w-11 place-items-center rounded-2xl border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5"
-                    data-testid={`iconwrap-expertise-${idx}`}
-                  >
-                    <Icon
-                      className="h-5 w-5 text-[hsl(var(--primary))]"
-                      strokeWidth={1.75}
-                    />
-                  </div>
-                  <div>
-                    <div
-                      className="text-lg font-semibold tracking-tight text-foreground"
-                      data-testid={`text-expertise-title-${idx}`}
+              <motion.div
+                key={it.title}
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    y: 28,
+                    rotateY: prefersReducedMotion ? 0 : -8,
+                    transformPerspective: 1000,
+                  },
+                  show: {
+                    opacity: 1,
+                    y: 0,
+                    rotateY: 0,
+                    transition: {
+                      duration: prefersReducedMotion ? 0.3 : 0.55,
+                      ease: [0.22, 1, 0.36, 1],
+                    },
+                  },
+                }}
+              >
+                <motion.div
+                  className="expertise-card group h-full"
+                  whileHover={
+                    prefersReducedMotion
+                      ? { y: -2 }
+                      : {
+                          y: -10,
+                          scale: 1.02,
+                          transition: {
+                            type: "spring",
+                            stiffness: 320,
+                            damping: 26,
+                          },
+                        }
+                  }
+                  style={{ transformStyle: "preserve-3d" }}
+                  data-testid={`card-expertise-${idx}`}
+                >
+                  <div className="expertise-card-glow" aria-hidden />
+
+                  <div className="flex items-start gap-5">
+                    <motion.div
+                      className="expertise-icon-wrap"
+                      data-testid={`iconwrap-expertise-${idx}`}
+                      whileHover={
+                        prefersReducedMotion ? {} : { scale: 1.08, rotate: 3 }
+                      }
+                      transition={{ type: "spring", stiffness: 400, damping: 20 }}
                     >
-                      {it.title}
-                    </div>
-                    <div
-                      className="mt-1 text-sm text-black/70 dark:text-white/70"
-                      data-testid={`text-expertise-desc-${idx}`}
-                    >
-                      {it.desc}
+                      <span className="expertise-icon-glow" aria-hidden />
+                      <Icon
+                        className="expertise-icon relative h-6 w-6 text-[hsl(var(--primary))]"
+                        strokeWidth={1.75}
+                      />
+                    </motion.div>
+                    <div className="min-w-0 flex-1">
+                      <h3
+                        className="text-lg font-semibold tracking-tight text-foreground"
+                        data-testid={`text-expertise-title-${idx}`}
+                      >
+                        {it.title}
+                      </h3>
+                      <p
+                        className="mt-1.5 text-sm leading-relaxed text-black/70 dark:text-white/70"
+                        data-testid={`text-expertise-desc-${idx}`}
+                      >
+                        {it.desc}
+                      </p>
                     </div>
                   </div>
-                </div>
-              </GlassCard>
+                </motion.div>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
 
-        <div className="mt-16 section-divider" aria-hidden />
+        <div className="mt-20 section-divider" aria-hidden />
       </div>
     </section>
   );
