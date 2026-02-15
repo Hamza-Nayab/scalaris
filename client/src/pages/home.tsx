@@ -19,6 +19,7 @@ import {
   Wand2,
   X,
 } from "lucide-react";
+import TiltedCard from "@/components/TiltedCard";
 
 function useTheme() {
   const [theme, setTheme] = useState(() => {
@@ -1344,11 +1345,11 @@ function Team() {
         </div>
 
         <div
-          className="relative mt-10 overflow-hidden"
+          className="relative mt-10 overflow-hidden py-20"
           data-testid="carousel-team"
         >
           <motion.div
-            className="flex gap-6"
+            className="flex gap-8"
             animate={{
               x: [0, -2400],
             }}
@@ -1362,52 +1363,42 @@ function Team() {
             }}
           >
             {[...people, ...people, ...people].map((p, idx) => (
-              <motion.div
+              <div
                 key={`${p.id}-${idx}`}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="group flex-shrink-0 w-[280px]"
+                className="flex-shrink-0"
                 data-testid={`card-team-${p.id}-${idx}`}
               >
-                <div className="glass gradient-border relative overflow-hidden rounded-3xl p-4 transition-all hover:scale-105 group-hover:olive-glow h-full">
-                  <div
-                    className="aspect-[3/4] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-black/5 dark:from-white/5 to-black/20 dark:to-black/50"
-                    data-testid={`img-team-${p.id}`}
-                  >
-                    {p.image ? (
-                      <img
-                        src={p.image}
-                        alt={p.name}
-                        className="h-full w-full object-cover"
-                        style={
-                          p.imagePosition
-                            ? { objectPosition: p.imagePosition }
-                            : undefined
-                        }
-                      />
-                    ) : (
-                      <div className="flex h-full items-center justify-center text-xs text-black/60 dark:text-white/60">
-                        Profile image
+                <TiltedCard
+                  imageSrc={p.image || "/placeholder-team.jpg"}
+                  altText={p.name}
+                  captionText={`${p.name} - ${p.role}`}
+                  containerHeight="350px"
+                  containerWidth="280px"
+                  imageHeight="350px"
+                  imageWidth="280px"
+                  rotateAmplitude={12}
+                  scaleOnHover={1.08}
+                  showMobileWarning={false}
+                  showTooltip
+                  displayOverlayContent
+                  overlayContent={
+                    <div className="absolute top-0 left-0 right-0 bg-gradient-to-b from-black/80 via-black/50 to-transparent p-6 rounded-t-[15px]">
+                      <div
+                        className="text-base font-semibold text-white"
+                        data-testid={`text-team-name-${p.id}`}
+                      >
+                        {p.name}
                       </div>
-                    )}
-                  </div>
-                  <div className="mt-4 px-1">
-                    <div
-                      className="text-base font-semibold text-foreground"
-                      data-testid={`text-team-name-${p.id}`}
-                    >
-                      {p.name}
+                      <div
+                        className="mt-1 text-sm text-white/80"
+                        data-testid={`text-team-role-${p.id}`}
+                      >
+                        {p.role}
+                      </div>
                     </div>
-                    <div
-                      className="mt-1 text-sm text-black/60 dark:text-white/60"
-                      data-testid={`text-team-role-${p.id}`}
-                    >
-                      {p.role}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+                  }
+                />
+              </div>
             ))}
           </motion.div>
         </div>
