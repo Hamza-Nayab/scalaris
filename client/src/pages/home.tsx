@@ -20,7 +20,6 @@ import {
   X,
 } from "lucide-react";
 
-
 function useTheme() {
   const [theme, setTheme] = useState(() => {
     if (typeof window !== "undefined") {
@@ -149,9 +148,15 @@ function FloatingShape3D({
   const prefersReducedMotion = useReducedMotion();
   return (
     <div
-      className={cn("shape-3d-container", size === "md" && "shape-3d-container-md", className)}
+      className={cn(
+        "shape-3d-container",
+        size === "md" && "shape-3d-container-md",
+        className,
+      )}
       aria-hidden
-      style={prefersReducedMotion ? undefined : { animationDelay: `${delay}ms` }}
+      style={
+        prefersReducedMotion ? undefined : { animationDelay: `${delay}ms` }
+      }
     >
       <div className="shape-3d-cube">
         <div className="shape-3d-face shape-3d-front" />
@@ -576,7 +581,11 @@ function Hero() {
   };
 
   return (
-    <section id="home" className="relative pt-28 overflow-x-hidden" data-testid="section-home">
+    <section
+      id="home"
+      className="relative pt-28 overflow-x-hidden"
+      data-testid="section-home"
+    >
       <div className="hero-grid-bg" aria-hidden />
 
       <main className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-12 md:pt-24 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -665,20 +674,36 @@ function Hero() {
           className="scene-3d"
           data-testid="hero-image"
         >
-          <div className="floating-card-hero card-1 z-20" data-testid="card-live-viewing">
+          <div
+            className="floating-card-hero card-1 z-20"
+            data-testid="card-live-viewing"
+          >
             <div className="flex items-center gap-3 mb-2">
               <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span className="text-xs font-bold text-muted-foreground uppercase">Live Viewing</span>
+              <span className="text-xs font-bold text-muted-foreground uppercase">
+                Live Viewing
+              </span>
             </div>
-            <div className="text-lg font-bold text-glow-hero">148 Active Users</div>
-            <div className="text-[10px] text-muted-foreground mt-1">Virtual Tour: Penthouse 702</div>
+            <div className="text-lg font-bold text-glow-hero">
+              148 Active Users
+            </div>
+            <div className="text-[10px] text-muted-foreground mt-1">
+              Virtual Tour: Penthouse 702
+            </div>
           </div>
 
-          <div className="floating-card-hero card-2 z-20" data-testid="card-market-sentiment">
+          <div
+            className="floating-card-hero card-2 z-20"
+            data-testid="card-market-sentiment"
+          >
             <div className="flex justify-between items-end gap-8">
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Market Sentiment</div>
-                <div className="text-xl font-extrabold text-[hsl(var(--primary))]">+12.4%</div>
+                <div className="text-xs text-muted-foreground mb-1">
+                  Market Sentiment
+                </div>
+                <div className="text-xl font-extrabold text-[hsl(var(--primary))]">
+                  +12.4%
+                </div>
               </div>
               <div className="flex gap-1">
                 <div className="w-1 h-4 bg-muted rounded-full" />
@@ -702,12 +727,18 @@ function Hero() {
               <div className="hero-face front" />
               <div className="hero-face back" />
             </div>
-            <div className="absolute inset-0 translate-y-24 blur-3xl bg-[hsl(var(--primary))]/20 rounded-full pointer-events-none" aria-hidden />
+            <div
+              className="absolute inset-0 translate-y-24 blur-3xl bg-[hsl(var(--primary))]/20 rounded-full pointer-events-none"
+              aria-hidden
+            />
           </div>
         </motion.div>
       </main>
 
-      <div className="max-w-7xl mx-auto px-4 mt-16 section-divider" aria-hidden />
+      <div
+        className="max-w-7xl mx-auto px-4 mt-16 section-divider"
+        aria-hidden
+      />
     </section>
   );
 }
@@ -733,15 +764,27 @@ function Story() {
   );
 
   return (
-    <section id="story" className="relative py-24 overflow-hidden" data-testid="section-story">
+    <section
+      id="story"
+      className="relative py-24 overflow-hidden"
+      data-testid="section-story"
+    >
       {/* Futuristic grid background */}
       <div
         className="process-grid-bg absolute inset-0 pointer-events-none"
         aria-hidden
       />
       {/* 3D floating shapes */}
-      <FloatingShape3D className="absolute top-20 right-[10%] w-16 h-16 opacity-40" size="sm" delay={0} />
-      <FloatingShape3D className="absolute bottom-32 left-[8%] w-12 h-12 opacity-30" size="sm" delay={800} />
+      <FloatingShape3D
+        className="absolute top-20 right-[10%] w-16 h-16 opacity-40"
+        size="sm"
+        delay={0}
+      />
+      <FloatingShape3D
+        className="absolute bottom-32 left-[8%] w-12 h-12 opacity-30"
+        size="sm"
+        delay={800}
+      />
 
       <div className="mx-auto max-w-6xl px-4 relative">
         <SectionHeader
@@ -755,16 +798,15 @@ function Story() {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
-          variants={{ show: { transition: { staggerChildren: 0.18, delayChildren: 0.1 } } }}
+          variants={{
+            show: { transition: { staggerChildren: 0.18, delayChildren: 0.1 } },
+          }}
           className="process-flow relative grid gap-6 md:grid-cols-3 md:gap-8"
           data-testid="grid-story"
           style={{ perspective: "1200px" }}
         >
           {/* Animated connector line (desktop) */}
-          <div
-            className="process-connector hidden md:block"
-            aria-hidden
-          >
+          <div className="process-connector hidden md:block" aria-hidden>
             <motion.span
               className="process-connector-progress"
               initial={{ scaleX: 0 }}
@@ -788,7 +830,10 @@ function Story() {
                   opacity: 1,
                   y: 0,
                   rotateX: 0,
-                  transition: { duration: prefersReducedMotion ? 0.3 : 0.6, ease: [0.22, 1, 0.36, 1] },
+                  transition: {
+                    duration: prefersReducedMotion ? 0.3 : 0.6,
+                    ease: [0.22, 1, 0.36, 1],
+                  },
                 },
               }}
               className="process-step-wrapper"
@@ -799,11 +844,15 @@ function Story() {
                   prefersReducedMotion
                     ? { y: -2 }
                     : {
-                      y: -8,
-                      rotateX: 4,
-                      rotateY: 0,
-                      transition: { type: "spring", stiffness: 300, damping: 24 },
-                    }
+                        y: -8,
+                        rotateX: 4,
+                        rotateY: 0,
+                        transition: {
+                          type: "spring",
+                          stiffness: 300,
+                          damping: 24,
+                        },
+                      }
                 }
                 style={{ transformStyle: "preserve-3d" }}
                 data-testid={`card-story-${i}`}
@@ -966,7 +1015,11 @@ function Expertise() {
                       whileHover={
                         prefersReducedMotion ? {} : { scale: 1.08, rotate: 3 }
                       }
-                      transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 20,
+                      }}
                     >
                       <span className="expertise-icon-glow" aria-hidden />
                       <Icon
