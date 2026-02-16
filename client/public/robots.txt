@@ -1,0 +1,15 @@
+# https://www.robotstxt.org/robotstxt.html
+# Scalaris - Software House & Web Development
+User-agent: *
+Allow: /
+
+# Disallow sensitive areas
+Disallow: /api/
+Disallow: /admin/
+Disallow: /*.json$
+
+# Crawl-delay for polite crawling
+Crawl-delay: 0
+
+# Sitemap
+Sitemap: https://scalaris.tech/sitemap.xml

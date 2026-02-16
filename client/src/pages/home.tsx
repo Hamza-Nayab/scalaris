@@ -682,14 +682,14 @@ function Hero() {
             <div className="flex items-center gap-3 mb-2">
               <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
               <span className="text-xs font-bold text-muted-foreground uppercase">
-                Live Viewing
+                Brand Impact
               </span>
             </div>
             <div className="text-lg font-bold text-glow-hero">
-              148 Active Users
+              3x More Engagement
             </div>
             <div className="text-[10px] text-muted-foreground mt-1">
-              Virtual Tour: Penthouse 702
+              First Impressions That Last
             </div>
           </div>
 
@@ -700,10 +700,10 @@ function Hero() {
             <div className="flex justify-between items-end gap-8">
               <div>
                 <div className="text-xs text-muted-foreground mb-1">
-                  Market Sentiment
+                  Client Conversions
                 </div>
                 <div className="text-xl font-extrabold text-[hsl(var(--primary))]">
-                  +12.4%
+                  +67%
                 </div>
               </div>
               <div className="flex gap-1">
