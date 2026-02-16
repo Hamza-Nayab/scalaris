@@ -68,40 +68,16 @@ function useActiveSection(sectionIds: string[]) {
 
     const observer = new IntersectionObserver(
       (entries) => {
-        // Find the section that's most visible in the viewport
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .map((e) => ({
-            id: e.target.id,
-            ratio: e.intersectionRatio,
-            rect: e.target.getBoundingClientRect(),
-          }))
-          .sort((a, b) => {
-            // Prioritize sections closer to the top of viewport
-            const topA = Math.max(0, a.rect.top);
-            const topB = Math.max(0, b.rect.top);
-
-            // If both are near the top (within 120px), pick the one that's higher
-            if (topA < 120 && topB < 120) {
-              return topA - topB;
-            }
-
-            // If one is near the top and the other isn't, prefer the one near the top
-            if (topA < 120) return -1;
-            if (topB < 120) return 1;
-
-            // Otherwise prefer higher intersection ratio
-            return b.ratio - a.ratio;
-          });
-
-        if (visible[0]?.id) {
-          setActive(visible[0].id);
-        }
+        // Highlight nav item when section is 50% visible
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            setActive(entry.target.id);
+          }
+        });
       },
       {
         root: null,
-        threshold: [0, 0.15, 0.3, 0.5, 0.7, 0.85, 1],
-        rootMargin: "-90px 0px -30% 0px",
+        threshold: 0.5, // Trigger when 50% visible
       },
     );
 
