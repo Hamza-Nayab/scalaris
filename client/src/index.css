@@ -184,19 +184,11 @@
   }
 
   .glass {
-    background: linear-gradient(180deg,
-        hsl(var(--card) / 0.72),
-        hsl(var(--card) / 0.6));
-    border: 1px solid hsl(var(--border) / 0.7);
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(10px);
+    
   }
 
   .dark .glass {
-    background: linear-gradient(180deg,
-        hsl(222 30% 11% / 0.72),
-        hsl(222 30% 9% / 0.6));
-    border: 1px solid hsl(220 18% 20% / 0.7);
+    
   }
 
   .olive-glow {
@@ -885,5 +877,103 @@
       justify-content: center;
       width: 100%;
     }
+  }
+
+  /* Work section: browser chrome + viewport (no outer frame) */
+  .project-preview-chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    min-height: 40px;
+    border-radius: 12px 12px 0 0;
+    background: hsl(var(--muted) / 0.6);
+    border: 1px solid hsl(var(--border) / 0.5);
+    border-bottom: none;
+  }
+
+  .project-preview-dots {
+    display: flex;
+    gap: 6px;
+  }
+
+  .project-preview-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+
+  .project-preview-dots span:nth-child(1) {
+    background: hsl(0 70% 55%);
+  }
+
+  .project-preview-dots span:nth-child(2) {
+    background: hsl(45 90% 55%);
+  }
+
+  .project-preview-dots span:nth-child(3) {
+    background: hsl(120 50% 45%);
+  }
+
+  .project-preview-url {
+    flex: 1;
+    min-width: 0;
+    margin-left: 8px;
+    padding: 6px 12px;
+    border-radius: 6px;
+    background: hsl(var(--background) / 0.8);
+    border: 1px solid hsl(var(--border) / 0.5);
+    font-size: 11px;
+    color: hsl(var(--muted-foreground));
+    font-family: ui-monospace, monospace;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .project-preview-viewport {
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: hsl(var(--muted) / 0.3);
+    border: 1px solid hsl(var(--border) / 0.5);
+    border-radius: 0 0 12px 12px;
+    position: relative;
+  }
+
+  .project-preview-viewport img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: top center;
+  }
+
+  /* Live iframe: scaled to fit viewport, constrained so content is interactive but contained */
+  .live-preview-iframe-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .live-preview-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    border: none;
+    transform-origin: 0 0;
+    pointer-events: auto;
+  }
+
+  .live-preview-iframe-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    color: hsl(var(--muted-foreground) / 0.8);
+  }
+
+  .project-card-work:hover .project-preview-viewport {
+    border-color: hsl(var(--primary) / 0.35);
   }
 }

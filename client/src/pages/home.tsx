@@ -1121,6 +1121,8 @@ type Project = {
   category: "Branding" | "Websites" | "Apps";
   line: string;
   url?: string;
+  /** Website screenshot or hero image for browser-frame preview. Falls back to image if unset. */
+  previewImage?: string;
   image?: string;
   imageClassName?: string;
   render?: React.ReactNode;
@@ -1155,6 +1157,7 @@ function Work() {
         category: "Websites",
         line: "Registration platform for DHA-backed medical research forum.",
         url: "https://dmrf.ae/",
+        previewImage: "/dmrf.jpg",
         image: "/dmrf.jpg",
         imageClassName: "h-full w-full object-contain p-4 bg-black",
       },
@@ -1193,6 +1196,7 @@ function Work() {
         category: "Websites",
         line: "An Academy Website",
         url: "https://unicadia.netlify.app/",
+        previewImage: "/Unicadia.png",
         image: "/Unicadia.png",
         imageClassName: "h-full w-full object-contain p-4 bg-black",
       },
@@ -1207,6 +1211,77 @@ function Work() {
     if (tab === "All") return projects;
     return projects.filter((p) => p.category === tab);
   }, [projects, tab]);
+
+  const getHostname = (url: string) => {
+    try {
+      return new URL(url).hostname.replace(/^www\./, "");
+    } catch {
+      return url;
+    }
+  };
+
+  /** Live iframe preview: loads URL when in view, scales to fit 16:10 viewport */
+  function LivePreviewIframe({
+    url,
+    title,
+  }: {
+    url: string;
+    title: string;
+  }) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [scale, setScale] = useState(0.25);
+    const [inView, setInView] = useState(false);
+
+    useEffect(() => {
+      const el = containerRef.current;
+      if (!el) return;
+
+      const ro = new ResizeObserver((entries) => {
+        const { width } = entries[0]?.contentRect ?? { width: 320 };
+        setScale(width / 1280);
+      });
+      ro.observe(el);
+      return () => ro.disconnect();
+    }, []);
+
+    useEffect(() => {
+      const el = containerRef.current;
+      if (!el) return;
+
+      const io = new IntersectionObserver(
+        (entries) => {
+          if (entries[0]?.isIntersecting) setInView(true);
+        },
+        { rootMargin: "100px", threshold: 0.1 },
+      );
+      io.observe(el);
+      return () => io.disconnect();
+    }, []);
+
+    return (
+      <div ref={containerRef} className="live-preview-iframe-wrap">
+        {inView ? (
+          <iframe
+            src={url}
+            title={`Live preview: ${title}`}
+            className="live-preview-iframe"
+            style={{
+              width: 1280,
+              height: 800,
+              transform: `scale(${scale})`,
+            }}
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+            referrerPolicy="no-referrer"
+            loading="lazy"
+          />
+        ) : (
+          <div className="live-preview-iframe-placeholder" aria-hidden>
+            Loading…
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <section id="work" className="relative py-20" data-testid="section-work">
@@ -1249,74 +1324,100 @@ function Work() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.35, ease: "easeOut" }}
-          className="mt-8 grid gap-5 md:grid-cols-2 lg:grid-cols-3"
+          className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3"
           data-testid="grid-work"
         >
-          {filtered.map((p) => (
-            <GlassCard key={p.id} testId={`card-project-${p.id}`}>
-              <div
-                className="aspect-[4/3] overflow-hidden rounded-2xl border border-black/10 dark:border-white/10 bg-gradient-to-br from-black/5 dark:from-white/5 to-black/20 dark:to-black/40"
-                data-testid={`img-project-${p.id}`}
+          {filtered.map((p) => {
+            const previewSrc = p.previewImage ?? p.image;
+            const hasViewportImage = Boolean(previewSrc && !p.render);
+            return (
+              <GlassCard
+                key={p.id}
+                testId={`card-project-${p.id}`}
+                className="project-card-work"
               >
-                {p.render ? (
-                  p.render
-                ) : p.image ? (
-                  <img
-                    src={p.image}
-                    alt={p.title}
-                    className={
-                      p.imageClassName ??
-                      "h-full w-full object-contain p-8 bg-white dark:bg-black/20"
-                    }
-                  />
-                ) : (
-                  <div className="flex h-full items-center justify-center text-xs text-black/60 dark:text-white/60">
-                    Preview image placeholder
+                <div className="project-preview-chrome">
+                  <div className="project-preview-dots" aria-hidden>
+                    <span />
+                    <span />
+                    <span />
                   </div>
-                )}
-              </div>
-              <div className="mt-4 flex items-center justify-between">
-                <div>
-                  <div
-                    className="text-sm font-semibold text-foreground"
-                    data-testid={`text-project-title-${p.id}`}
-                  >
-                    {p.title}
-                  </div>
-                  <div
-                    className="mt-1 text-xs text-black/60 dark:text-white/60"
-                    data-testid={`text-project-cat-${p.id}`}
-                  >
-                    {p.category}
+                  <div className="project-preview-url" title={p.url ?? p.title}>
+                    {p.url ? getHostname(p.url) : p.title}
                   </div>
                 </div>
-                {p.url ? (
-                  <a
-                    href={p.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-2 hover:bg-primary/10 transition-colors"
-                    data-testid={`button-project-open-${p.id}`}
-                  >
-                    <ArrowRight className="h-4 w-4 text-[hsl(var(--primary))]" />
-                  </a>
-                ) : (
-                  <div
-                    className="rounded-full border border-black/10 dark:border-white/10 bg-black/5 dark:bg-white/5 p-2"
-                    data-testid={`button-project-open-${p.id}`}
-                  >
-                    <ArrowRight className="h-4 w-4 text-[hsl(var(--primary))]" />
+                <div
+                  className="project-preview-viewport"
+                  data-testid={`img-project-${p.id}`}
+                >
+                  {p.render ? (
+                    <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                      {p.render}
+                    </div>
+                  ) : p.url ? (
+                    <LivePreviewIframe url={p.url} title={p.title} />
+                  ) : previewSrc ? (
+                    <img
+                      src={previewSrc}
+                      alt={`${p.title} website preview`}
+                      className={
+                        hasViewportImage && !p.previewImage
+                          ? p.imageClassName ??
+                            "h-full w-full object-contain p-6 bg-white dark:bg-black/20"
+                          : undefined
+                      }
+                    />
+                  ) : (
+                    <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
+                      No preview
+                    </div>
+                  )}
+                </div>
+                <div className="mt-4 flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <div
+                      className="text-sm font-semibold text-foreground truncate"
+                      data-testid={`text-project-title-${p.id}`}
+                    >
+                      {p.title}
+                    </div>
+                    <div
+                      className="mt-0.5 text-xs text-muted-foreground"
+                      data-testid={`text-project-cat-${p.id}`}
+                    >
+                      {p.category}
+                    </div>
                   </div>
-                )}
-              </div>
-              <div
-                className="mt-3 text-sm text-black/70 dark:text-white/70"
-                data-testid={`text-project-line-${p.id}`}
-              >
-                {p.line}
-              </div>
-            </GlassCard>
-          ))}
+                  {p.url ? (
+                    <a
+                      href={p.url}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="flex-shrink-0 inline-flex items-center gap-1.5 rounded-full border border-border bg-muted/50 px-3 py-2 text-xs font-medium text-foreground hover:bg-primary/10 hover:border-primary/30 hover:text-primary transition-colors"
+                      data-testid={`button-project-open-${p.id}`}
+                    >
+                      Visit site
+                      <ArrowRight className="h-3.5 w-3.5" />
+                    </a>
+                  ) : (
+                    <div
+                      className="flex-shrink-0 rounded-full border border-border bg-muted/50 px-3 py-2 text-xs text-muted-foreground"
+                      data-testid={`button-project-open-${p.id}`}
+                    >
+                      Visit site
+                      <ArrowRight className="ml-1.5 inline h-3.5 w-3.5" />
+                    </div>
+                  )}
+                </div>
+                <p
+                  className="mt-3 text-sm text-muted-foreground line-clamp-2"
+                  data-testid={`text-project-line-${p.id}`}
+                >
+                  {p.line}
+                </p>
+              </GlassCard>
+            );
+          })}
         </motion.div>
 
         <div className="mt-16 section-divider" aria-hidden />
