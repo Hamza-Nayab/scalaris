@@ -1034,11 +1034,26 @@ function Expertise() {
             <div className="tech-marquee-track">
               {[
                 { name: "MongoDB", slug: "mongodb", color: "47A248" },
-                { name: "Express", slug: "express", color: "000000", darkInvert: true },
+                {
+                  name: "Express",
+                  slug: "express",
+                  color: "000000",
+                  darkInvert: true,
+                },
                 { name: "React", slug: "react", color: "61DAFB" },
                 { name: "Node.js", slug: "nodedotjs", color: "339933" },
-                { name: "Next.js", slug: "nextdotjs", color: "000000", darkInvert: true },
-                { name: "Three.js", slug: "threedotjs", color: "000000", darkInvert: true },
+                {
+                  name: "Next.js",
+                  slug: "nextdotjs",
+                  color: "000000",
+                  darkInvert: true,
+                },
+                {
+                  name: "Three.js",
+                  slug: "threedotjs",
+                  color: "000000",
+                  darkInvert: true,
+                },
                 { name: "WordPress", slug: "wordpress", color: "21759B" },
                 { name: "Tailwind CSS", slug: "tailwindcss", color: "06B6D4" },
                 { name: "Vite", slug: "vite", color: "646CFF" },
@@ -1050,7 +1065,7 @@ function Expertise() {
                   title={tech.name}
                   className={cn(
                     "tech-marquee-logo h-9 w-9 flex-shrink-0 object-contain md:h-10 md:w-10",
-                    tech.darkInvert && "dark:invert dark:opacity-90"
+                    tech.darkInvert && "dark:invert dark:opacity-90",
                   )}
                   width={40}
                   height={40}
@@ -1059,11 +1074,26 @@ function Expertise() {
               {/* Duplicate for seamless loop */}
               {[
                 { name: "MongoDB", slug: "mongodb", color: "47A248" },
-                { name: "Express", slug: "express", color: "000000", darkInvert: true },
+                {
+                  name: "Express",
+                  slug: "express",
+                  color: "000000",
+                  darkInvert: true,
+                },
                 { name: "React", slug: "react", color: "61DAFB" },
                 { name: "Node.js", slug: "nodedotjs", color: "339933" },
-                { name: "Next.js", slug: "nextdotjs", color: "000000", darkInvert: true },
-                { name: "Three.js", slug: "threedotjs", color: "000000", darkInvert: true },
+                {
+                  name: "Next.js",
+                  slug: "nextdotjs",
+                  color: "000000",
+                  darkInvert: true,
+                },
+                {
+                  name: "Three.js",
+                  slug: "threedotjs",
+                  color: "000000",
+                  darkInvert: true,
+                },
                 { name: "WordPress", slug: "wordpress", color: "21759B" },
                 { name: "Tailwind CSS", slug: "tailwindcss", color: "06B6D4" },
                 { name: "Vite", slug: "vite", color: "646CFF" },
@@ -1075,7 +1105,7 @@ function Expertise() {
                   aria-hidden
                   className={cn(
                     "tech-marquee-logo h-9 w-9 flex-shrink-0 object-contain md:h-10 md:w-10",
-                    tech.darkInvert && "dark:invert dark:opacity-90"
+                    tech.darkInvert && "dark:invert dark:opacity-90",
                   )}
                   width={40}
                   height={40}
