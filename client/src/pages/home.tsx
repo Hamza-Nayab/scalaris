@@ -377,11 +377,7 @@ function Navbar({ activeId }: { activeId: string }) {
                 }}
               >
                 <img
-                  src={
-                    theme === "dark"
-                      ? siteConfig.darkLogoPath
-                      : siteConfig.logoPath
-                  }
+                  src={siteConfig.logoPath}
                   alt={siteConfig.brandName}
                   className="h-full w-full object-cover"
                   data-testid="img-logo"
