@@ -302,11 +302,10 @@ function CursorGlow() {
   );
 }
 
-function Navbar({ activeId }: { activeId: string }) {
+function Navbar({ activeId, theme, toggle }: { activeId: string; theme: string; toggle: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, toggle } = useTheme();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -377,7 +376,11 @@ function Navbar({ activeId }: { activeId: string }) {
                 }}
               >
                 <img
-                  src={siteConfig.logoPath}
+                  src={
+                    theme === "dark"
+                      ? siteConfig.darkLogoPath
+                      : siteConfig.logoPath
+                  }
                   alt={siteConfig.brandName}
                   className="h-full w-full object-cover"
                   data-testid="img-logo"
@@ -2090,28 +2093,7 @@ function Footer({ theme }: { theme: string }) {
 }
 
 export default function Home() {
-  const [theme, setTheme] = useState(() => {
-    if (typeof window !== "undefined") {
-      return document.documentElement.classList.contains("dark")
-        ? "dark"
-        : "light";
-    }
-    return "dark";
-  });
-
-  useEffect(() => {
-    const observer = new MutationObserver(() => {
-      const isDark = document.documentElement.classList.contains("dark");
-      setTheme(isDark ? "dark" : "light");
-    });
-
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-    });
-
-    return () => observer.disconnect();
-  }, []);
+  const { theme, toggle } = useTheme();
 
   const ids = useMemo(
     () => navLinks.map((l: (typeof navLinks)[number]) => l.id),
@@ -2123,7 +2105,7 @@ export default function Home() {
     <div className="relative min-h-screen overflow-x-hidden bg-background">
       <TopProgress />
       <CursorGlow />
-      <Navbar activeId={active} />
+      <Navbar activeId={active} theme={theme} toggle={toggle} />
 
       <main className="relative z-10" data-testid="main">
         <Hero />
