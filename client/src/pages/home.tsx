@@ -20,6 +20,8 @@ import {
   X,
 } from "lucide-react";
 import TiltedCard from "@/components/TiltedCard";
+import LogoLoop from "@/components/LogoLoop";
+import Magnet from "@/components/Magnet";
 
 function useTheme() {
   const [theme, setTheme] = useState(() => {
@@ -1026,92 +1028,127 @@ function Expertise() {
         </motion.div>
 
         {/* Technologies we use — moving logo marquee */}
-        <div className="mt-16 overflow-hidden">
-          <p className="mb-6 text-center text-sm font-medium text-black/60 dark:text-white/60">
+        <div className="mt-16">
+          <p className="mb-8 text-center text-sm font-medium text-black/60 dark:text-white/60">
             Technologies we use
           </p>
-          <div className="tech-marquee-wrap">
-            <div className="tech-marquee-track">
-              {[
-                { name: "MongoDB", slug: "mongodb", color: "47A248" },
-                {
-                  name: "Express",
-                  slug: "express",
-                  color: "000000",
-                  darkInvert: true,
+          <div style={{ height: '120px', position: 'relative' }}>
+            <LogoLoop
+              logos={[
+                { 
+                  src: "https://cdn.simpleicons.org/mongodb/47A248",
+                  alt: "MongoDB",
+                  title: "MongoDB"
                 },
-                { name: "React", slug: "react", color: "61DAFB" },
-                { name: "Node.js", slug: "nodedotjs", color: "339933" },
-                {
-                  name: "Next.js",
-                  slug: "nextdotjs",
-                  color: "000000",
-                  darkInvert: true,
+                { 
+                  src: "https://cdn.simpleicons.org/express/000000",
+                  alt: "Express",
+                  title: "Express",
+                  className: "dark:invert dark:opacity-90"
                 },
-                {
-                  name: "Three.js",
-                  slug: "threedotjs",
-                  color: "000000",
-                  darkInvert: true,
+                { 
+                  src: "https://cdn.simpleicons.org/react/61DAFB",
+                  alt: "React",
+                  title: "React"
                 },
-                { name: "WordPress", slug: "wordpress", color: "21759B" },
-                { name: "Tailwind CSS", slug: "tailwindcss", color: "06B6D4" },
-                { name: "Vite", slug: "vite", color: "646CFF" },
-              ].map((tech) => (
-                <img
-                  key={tech.slug}
-                  src={`https://cdn.simpleicons.org/${tech.slug}/${tech.color}`}
-                  alt={tech.name}
-                  title={tech.name}
-                  className={cn(
-                    "tech-marquee-logo h-9 w-9 flex-shrink-0 object-contain md:h-10 md:w-10",
-                    tech.darkInvert && "dark:invert dark:opacity-90",
-                  )}
-                  width={40}
-                  height={40}
-                />
-              ))}
-              {/* Duplicate for seamless loop */}
-              {[
-                { name: "MongoDB", slug: "mongodb", color: "47A248" },
-                {
-                  name: "Express",
-                  slug: "express",
-                  color: "000000",
-                  darkInvert: true,
+                { 
+                  src: "https://cdn.simpleicons.org/nodedotjs/339933",
+                  alt: "Node.js",
+                  title: "Node.js"
                 },
-                { name: "React", slug: "react", color: "61DAFB" },
-                { name: "Node.js", slug: "nodedotjs", color: "339933" },
-                {
-                  name: "Next.js",
-                  slug: "nextdotjs",
-                  color: "000000",
-                  darkInvert: true,
+                { 
+                  src: "https://cdn.simpleicons.org/nextdotjs/000000",
+                  alt: "Next.js",
+                  title: "Next.js",
+                  className: "dark:invert dark:opacity-90"
                 },
-                {
-                  name: "Three.js",
-                  slug: "threedotjs",
-                  color: "000000",
-                  darkInvert: true,
+                { 
+                  src: "https://cdn.simpleicons.org/python/3776AB",
+                  alt: "Python",
+                  title: "Python"
                 },
-                { name: "WordPress", slug: "wordpress", color: "21759B" },
-                { name: "Tailwind CSS", slug: "tailwindcss", color: "06B6D4" },
-                { name: "Vite", slug: "vite", color: "646CFF" },
-              ].map((tech) => (
-                <img
-                  key={`dup-${tech.slug}`}
-                  src={`https://cdn.simpleicons.org/${tech.slug}/${tech.color}`}
-                  alt=""
-                  aria-hidden
-                  className={cn(
-                    "tech-marquee-logo h-9 w-9 flex-shrink-0 object-contain md:h-10 md:w-10",
-                    tech.darkInvert && "dark:invert dark:opacity-90",
-                  )}
-                  width={40}
-                  height={40}
-                />
-              ))}
-            </div>
+                { 
+                  src: "https://cdn.simpleicons.org/tensorflow/FF6F00",
+                  alt: "TensorFlow",
+                  title: "TensorFlow"
+                },
+                { 
+                  src: "https://cdn.simpleicons.org/pytorch/EE4C2C",
+                  alt: "PyTorch",
+                  title: "PyTorch"
+                },
+                { 
+                  src: "https://cdn.simpleicons.org/openai/412991",
+                  alt: "OpenAI",
+                  title: "OpenAI"
+                },
+                { 
+                  src: "https://cdn.simpleicons.org/anthropic/191919",
+                  alt: "Anthropic",
+                  title: "Anthropic",
+                  className: "dark:invert dark:opacity-90"
+                },
+                { 
+                  src: "https://cdn.simpleicons.org/langchain/1C3C3C",
+                  alt: "LangChain",
+                  title: "LangChain",
+                  className: "dark:invert dark:opacity-90"
+                },
+                { 
+                  src: "https://cdn.simpleicons.org/threedotjs/000000",
+                  alt: "Three.js",
+                  title: "Three.js",
+                  className: "dark:invert dark:opacity-90"
+                },
+                { 
+                  src: "https://cdn.simpleicons.org/wordpress/21759B",
+                  alt: "WordPress",
+                  title: "WordPress"
+                },
+                { 
+                  src: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
+                  alt: "Tailwind CSS",
+                  title: "Tailwind CSS"
+                },
+                { 
+                  src: "https://cdn.simpleicons.org/vite/646CFF",
+                  alt: "Vite",
+                  title: "Vite"
+                },
+                { 
+                  src: "https://cdn.simpleicons.org/huggingface/FFD21E",
+                  alt: "Hugging Face",
+                  title: "Hugging Face"
+                },
+                { 
+                  src: "https://cdn.simpleicons.org/jupyter/F37626",
+                  alt: "Jupyter",
+                  title: "Jupyter"
+                }
+              ]}
+              speed={100}
+              direction="left"
+              logoHeight={60}
+              gap={60}
+              hoverSpeed={0}
+              scaleOnHover
+              fadeOut={false}
+              ariaLabel="Technologies we use"
+              renderItem={(item) => (
+                <Magnet padding={50} magnetStrength={3}>
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    title={item.title}
+                    className={item.className}
+                    loading="lazy"
+                    decoding="async"
+                    draggable={false}
+                    style={{ height: '60px', width: 'auto', display: 'block' }}
+                  />
+                </Magnet>
+              )}
+            />
           </div>
         </div>
 
@@ -1212,11 +1249,38 @@ function Work() {
 
   const tabs = ["All", "Branding", "Websites", "Apps"] as const;
   const [tab, setTab] = useState<(typeof tabs)[number]>("All");
+  const sectionRef = useRef<HTMLElement>(null);
+  const [loadedProjects, setLoadedProjects] = useState<Set<string>>(new Set());
 
   const filtered = useMemo(() => {
     if (tab === "All") return projects;
     return projects.filter((p) => p.category === tab);
   }, [projects, tab]);
+
+  // Staggered preload when section approaches viewport
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          // Section is approaching - start staggered loading
+          const projectsWithUrls = projects.filter((p) => p.url);
+          projectsWithUrls.forEach((project, index) => {
+            setTimeout(() => {
+              setLoadedProjects((prev) => new Set([...prev, project.id]));
+            }, index * 500); // 500ms delay between each iframe load
+          });
+          observer.disconnect();
+        }
+      },
+      { rootMargin: "500px" } // Start loading 500px before section enters viewport
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, [projects]);
 
   const getHostname = (url: string) => {
     try {
@@ -1226,17 +1290,19 @@ function Work() {
     }
   };
 
-  /** Live iframe preview: loads URL when in view, scales to fit 16:10 viewport */
+  /** Live iframe preview: intelligently preloads when section approaches viewport */
   function LivePreviewIframe({
     url,
     title,
+    shouldLoad,
   }: {
     url: string;
     title: string;
+    shouldLoad: boolean;
   }) {
     const containerRef = useRef<HTMLDivElement>(null);
     const [scale, setScale] = useState(0.25);
-    const [inView, setInView] = useState(false);
+    const [hasLoaded, setHasLoaded] = useState(false);
 
     useEffect(() => {
       const el = containerRef.current;
@@ -1251,22 +1317,14 @@ function Work() {
     }, []);
 
     useEffect(() => {
-      const el = containerRef.current;
-      if (!el) return;
-
-      const io = new IntersectionObserver(
-        (entries) => {
-          if (entries[0]?.isIntersecting) setInView(true);
-        },
-        { rootMargin: "100px", threshold: 0.1 },
-      );
-      io.observe(el);
-      return () => io.disconnect();
-    }, []);
+      if (shouldLoad && !hasLoaded) {
+        setHasLoaded(true);
+      }
+    }, [shouldLoad, hasLoaded]);
 
     return (
       <div ref={containerRef} className="live-preview-iframe-wrap">
-        {inView ? (
+        {hasLoaded ? (
           <iframe
             src={url}
             title={`Live preview: ${title}`}
@@ -1278,11 +1336,10 @@ function Work() {
             }}
             sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
             referrerPolicy="no-referrer"
-            loading="lazy"
           />
         ) : (
-          <div className="live-preview-iframe-placeholder" aria-hidden>
-            Loading…
+          <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
+            <div className="animate-pulse">Loading preview...</div>
           </div>
         )}
       </div>
@@ -1290,7 +1347,7 @@ function Work() {
   }
 
   return (
-    <section id="work" className="relative py-20" data-testid="section-work">
+    <section id="work" ref={sectionRef} className="relative py-20" data-testid="section-work">
       <div className="mx-auto max-w-6xl px-4">
         <SectionHeader
           eyebrow="Work"
@@ -1334,8 +1391,10 @@ function Work() {
           data-testid="grid-work"
         >
           {filtered.map((p) => {
+            const [isHovered, setIsHovered] = useState(false);
             const previewSrc = p.previewImage ?? p.image;
             const hasViewportImage = Boolean(previewSrc && !p.render);
+            
             return (
               <GlassCard
                 key={p.id}
@@ -1353,29 +1412,41 @@ function Work() {
                   </div>
                 </div>
                 <div
-                  className="project-preview-viewport"
+                  className="project-preview-viewport relative"
                   data-testid={`img-project-${p.id}`}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
                 >
-                  {p.render ? (
-                    <div className="h-full w-full flex items-center justify-center overflow-hidden">
-                      {p.render}
-                    </div>
-                  ) : p.url ? (
-                    <LivePreviewIframe url={p.url} title={p.title} />
-                  ) : previewSrc ? (
-                    <img
-                      src={previewSrc}
-                      alt={`${p.title} website preview`}
-                      className={
-                        hasViewportImage && !p.previewImage
-                          ? p.imageClassName ??
-                            "h-full w-full object-contain p-6 bg-white dark:bg-black/20"
-                          : undefined
-                      }
-                    />
-                  ) : (
-                    <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
-                      No preview
+                  {/* Static preview (logo/image) - default view */}
+                  <div className={`absolute inset-0 transition-opacity duration-300 ${isHovered && p.url ? 'opacity-0' : 'opacity-100'}`}>
+                    {p.render ? (
+                      <div className="h-full w-full flex items-center justify-center overflow-hidden">
+                        {p.render}
+                      </div>
+                    ) : previewSrc ? (
+                      <img
+                        src={previewSrc}
+                        alt={`${p.title} logo`}
+                        className={
+                          p.imageClassName ??
+                          "h-full w-full object-contain p-6 bg-white dark:bg-black/20"
+                        }
+                      />
+                    ) : (
+                      <div className="flex h-full items-center justify-center text-xs text-muted-foreground">
+                        No preview
+                      </div>
+                    )}
+                  </div>
+                  
+                  {/* Live website preview - on hover */}
+                  {p.url && (
+                    <div className={`absolute inset-0 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
+                      <LivePreviewIframe 
+                        url={p.url} 
+                        title={p.title}
+                        shouldLoad={loadedProjects.has(p.id)}
+                      />
                     </div>
                   )}
                 </div>
