@@ -1,7 +1,7 @@
 export const siteConfig = {
   brandName: "Scalaris",
   brandTagline: "Elevating Identities.",
-  logoPath: "/favicon.png",
+  logoPath: "/dark.png",
   whatsappNumber: "+971504486615",
   emailPlaceholder: "hello@scalaris.ae",
   officeAddress: "Business Bay, Dubai, UAE",
