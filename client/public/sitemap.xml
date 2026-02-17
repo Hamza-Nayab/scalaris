@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <!-- Homepage - Main Landing Page -->
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
   <url>
     <loc>https://scalaris.tech/</loc>
     <lastmod>2026-02-18</lastmod>
@@ -12,49 +10,8 @@
     <image:image>
       <image:loc>https://scalaris.tech/opengraph.jpg</image:loc>
       <image:title>Scalaris Tech - Dubai Software House</image:title>
-      <image:caption>Real estate web and AI development in Dubai</image:caption>
+      <image:caption>AI, Web and Mobile App Development in Dubai</image:caption>
     </image:image>
   </url>
 
-  <!-- Add more pages as your site grows:
-  
-  Example structure for additional pages:
-  
-  <url>
-    <loc>https://scalaris.tech/services</loc>
-    <lastmod>2026-02-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://scalaris.tech/portfolio</loc>
-    <lastmod>2026-02-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://scalaris.tech/about</loc>
-    <lastmod>2026-02-17</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>https://scalaris.tech/contact</loc>
-    <lastmod>2026-02-17</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  
-  <url>
-    <loc>https://scalaris.tech/blog</loc>
-    <lastmod>2026-02-17</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  -->
-  
 </urlset>
