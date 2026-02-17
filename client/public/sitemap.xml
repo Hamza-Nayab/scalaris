@@ -6,13 +6,13 @@
   <!-- Homepage - Main Landing Page -->
   <url>
     <loc>https://scalaris.tech/</loc>
-    <lastmod>2026-02-17</lastmod>
+    <lastmod>2026-02-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <image:image>
-      <image:loc>https://scalaris.tech/light.png</image:loc>
-      <image:title>Scalaris - Software House Dubai</image:title>
-      <image:caption>Leading software development and web design company in Dubai</image:caption>
+      <image:loc>https://scalaris.tech/opengraph.jpg</image:loc>
+      <image:title>Scalaris Tech - Dubai Software House</image:title>
+      <image:caption>Real estate web and AI development in Dubai</image:caption>
     </image:image>
   </url>
 
