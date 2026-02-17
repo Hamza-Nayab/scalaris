@@ -821,15 +821,15 @@ function Story() {
                   prefersReducedMotion
                     ? { y: -2 }
                     : {
-                        y: -8,
-                        rotateX: 4,
-                        rotateY: 0,
-                        transition: {
-                          type: "spring",
-                          stiffness: 300,
-                          damping: 24,
-                        },
-                      }
+                      y: -8,
+                      rotateX: 4,
+                      rotateY: 0,
+                      transition: {
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 24,
+                      },
+                    }
                 }
                 style={{ transformStyle: "preserve-3d" }}
                 data-testid={`card-story-${i}`}
@@ -971,14 +971,14 @@ function Expertise() {
                     prefersReducedMotion
                       ? { y: -2 }
                       : {
-                          y: -10,
-                          scale: 1.02,
-                          transition: {
-                            type: "spring",
-                            stiffness: 320,
-                            damping: 26,
-                          },
-                        }
+                        y: -10,
+                        scale: 1.02,
+                        transition: {
+                          type: "spring",
+                          stiffness: 320,
+                          damping: 26,
+                        },
+                      }
                   }
                   style={{ transformStyle: "preserve-3d" }}
                   data-testid={`card-expertise-${idx}`}
@@ -1369,7 +1369,7 @@ function Work() {
                       className={
                         hasViewportImage && !p.previewImage
                           ? p.imageClassName ??
-                            "h-full w-full object-contain p-6 bg-white dark:bg-black/20"
+                          "h-full w-full object-contain p-6 bg-white dark:bg-black/20"
                           : undefined
                       }
                     />
