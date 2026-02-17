@@ -1251,14 +1251,27 @@ function Work() {
   const [tab, setTab] = useState<(typeof tabs)[number]>("All");
   const sectionRef = useRef<HTMLElement>(null);
   const [loadedProjects, setLoadedProjects] = useState<Set<string>>(new Set());
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile devices
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const filtered = useMemo(() => {
     if (tab === "All") return projects;
     return projects.filter((p) => p.category === tab);
   }, [projects, tab]);
 
-  // Staggered preload when section approaches viewport
+  // Staggered preload when section approaches viewport (desktop only)
   useEffect(() => {
+    if (isMobile) return; // Skip iframe loading on mobile
+
     const section = sectionRef.current;
     if (!section) return;
 
@@ -1280,7 +1293,7 @@ function Work() {
 
     observer.observe(section);
     return () => observer.disconnect();
-  }, [projects]);
+  }, [projects, isMobile]);
 
   const getHostname = (url: string) => {
     try {
@@ -1446,8 +1459,8 @@ function Work() {
                     )}
                   </div>
 
-                  {/* Live website preview - on hover */}
-                  {p.url && (
+                  {/* Live website preview - on hover (desktop only) */}
+                  {!isMobile && p.url && (
                     <div
                       className={`absolute inset-0 transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0 pointer-events-none"}`}
                     >
