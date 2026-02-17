@@ -1032,99 +1032,99 @@ function Expertise() {
           <p className="mb-8 text-center text-sm font-medium text-black/60 dark:text-white/60">
             Technologies we use
           </p>
-          <div style={{ height: '120px', position: 'relative' }}>
+          <div style={{ height: "120px", position: "relative" }}>
             <LogoLoop
               logos={[
-                { 
+                {
                   src: "https://cdn.simpleicons.org/mongodb/47A248",
                   alt: "MongoDB",
-                  title: "MongoDB"
+                  title: "MongoDB",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/express/000000",
                   alt: "Express",
                   title: "Express",
-                  className: "dark:invert dark:opacity-90"
+                  className: "dark:invert dark:opacity-90",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/react/61DAFB",
                   alt: "React",
-                  title: "React"
+                  title: "React",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/nodedotjs/339933",
                   alt: "Node.js",
-                  title: "Node.js"
+                  title: "Node.js",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/nextdotjs/000000",
                   alt: "Next.js",
                   title: "Next.js",
-                  className: "dark:invert dark:opacity-90"
+                  className: "dark:invert dark:opacity-90",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/python/3776AB",
                   alt: "Python",
-                  title: "Python"
+                  title: "Python",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/tensorflow/FF6F00",
                   alt: "TensorFlow",
-                  title: "TensorFlow"
+                  title: "TensorFlow",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/pytorch/EE4C2C",
                   alt: "PyTorch",
-                  title: "PyTorch"
+                  title: "PyTorch",
                 },
-                { 
-                  src: "https://cdn.simpleicons.org/openai/412991",
-                  alt: "OpenAI",
-                  title: "OpenAI"
+                {
+                  src: "https://cdn.simpleicons.org/googlegemini/8E75B2",
+                  alt: "Google Gemini",
+                  title: "Google Gemini",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/anthropic/191919",
                   alt: "Anthropic",
                   title: "Anthropic",
-                  className: "dark:invert dark:opacity-90"
+                  className: "dark:invert dark:opacity-90",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/langchain/1C3C3C",
                   alt: "LangChain",
                   title: "LangChain",
-                  className: "dark:invert dark:opacity-90"
+                  className: "dark:invert dark:opacity-90",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/threedotjs/000000",
                   alt: "Three.js",
                   title: "Three.js",
-                  className: "dark:invert dark:opacity-90"
+                  className: "dark:invert dark:opacity-90",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/wordpress/21759B",
                   alt: "WordPress",
-                  title: "WordPress"
+                  title: "WordPress",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/tailwindcss/06B6D4",
                   alt: "Tailwind CSS",
-                  title: "Tailwind CSS"
+                  title: "Tailwind CSS",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/vite/646CFF",
                   alt: "Vite",
-                  title: "Vite"
+                  title: "Vite",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/huggingface/FFD21E",
                   alt: "Hugging Face",
-                  title: "Hugging Face"
+                  title: "Hugging Face",
                 },
-                { 
+                {
                   src: "https://cdn.simpleicons.org/jupyter/F37626",
                   alt: "Jupyter",
-                  title: "Jupyter"
-                }
+                  title: "Jupyter",
+                },
               ]}
               speed={100}
               direction="left"
@@ -1144,7 +1144,7 @@ function Expertise() {
                     loading="lazy"
                     decoding="async"
                     draggable={false}
-                    style={{ height: '60px', width: 'auto', display: 'block' }}
+                    style={{ height: "60px", width: "auto", display: "block" }}
                   />
                 </Magnet>
               )}
@@ -1275,7 +1275,7 @@ function Work() {
           observer.disconnect();
         }
       },
-      { rootMargin: "500px" } // Start loading 500px before section enters viewport
+      { rootMargin: "500px" }, // Start loading 500px before section enters viewport
     );
 
     observer.observe(section);
@@ -1347,7 +1347,12 @@ function Work() {
   }
 
   return (
-    <section id="work" ref={sectionRef} className="relative py-20" data-testid="section-work">
+    <section
+      id="work"
+      ref={sectionRef}
+      className="relative py-20"
+      data-testid="section-work"
+    >
       <div className="mx-auto max-w-6xl px-4">
         <SectionHeader
           eyebrow="Work"
@@ -1394,7 +1399,7 @@ function Work() {
             const [isHovered, setIsHovered] = useState(false);
             const previewSrc = p.previewImage ?? p.image;
             const hasViewportImage = Boolean(previewSrc && !p.render);
-            
+
             return (
               <GlassCard
                 key={p.id}
@@ -1418,7 +1423,9 @@ function Work() {
                   onMouseLeave={() => setIsHovered(false)}
                 >
                   {/* Static preview (logo/image) - default view */}
-                  <div className={`absolute inset-0 transition-opacity duration-300 ${isHovered && p.url ? 'opacity-0' : 'opacity-100'}`}>
+                  <div
+                    className={`absolute inset-0 transition-opacity duration-300 ${isHovered && p.url ? "opacity-0" : "opacity-100"}`}
+                  >
                     {p.render ? (
                       <div className="h-full w-full flex items-center justify-center overflow-hidden">
                         {p.render}
@@ -1438,12 +1445,14 @@ function Work() {
                       </div>
                     )}
                   </div>
-                  
+
                   {/* Live website preview - on hover */}
                   {p.url && (
-                    <div className={`absolute inset-0 transition-opacity duration-300 ${isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                      <LivePreviewIframe 
-                        url={p.url} 
+                    <div
+                      className={`absolute inset-0 transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+                    >
+                      <LivePreviewIframe
+                        url={p.url}
                         title={p.title}
                         shouldLoad={loadedProjects.has(p.id)}
                       />
