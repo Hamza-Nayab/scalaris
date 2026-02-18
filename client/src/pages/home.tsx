@@ -302,7 +302,15 @@ function CursorGlow() {
   );
 }
 
-function Navbar({ activeId, theme, toggle }: { activeId: string; theme: string; toggle: () => void }) {
+function Navbar({
+  activeId,
+  theme,
+  toggle,
+}: {
+  activeId: string;
+  theme: string;
+  toggle: () => void;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
