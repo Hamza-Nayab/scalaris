@@ -1436,7 +1436,7 @@ function Work() {
                 >
                   {/* Static preview (logo/image) - default view */}
                   <div
-                    className={`absolute inset-0 transition-opacity duration-300 ${isHovered && p.url ? "opacity-0" : "opacity-100"}`}
+                    className={`absolute inset-0 transition-opacity duration-300 ${isHovered && p.url && !isMobile ? "opacity-0" : "opacity-100"}`}
                   >
                     {p.render ? (
                       <div className="h-full w-full flex items-center justify-center overflow-hidden">
